@@ -1,0 +1,2208 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4f5fb">
+<script>try{var _p=localStorage.getItem("lifeos_theme")||"auto";document.documentElement.dataset.mode=(_p==="dark"||(_p==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches))?"dark":"light"}catch(e){}</script>
+<title>Mo3abs — حياتي</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon-64.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="حياتي">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --label:#1c1c1e;--label2:#6c6c70;--label3:#a1a1a6;
+  --blue:#007aff;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--purple:#af52de;--teal:#30b0c7;
+  --glass:rgba(255,255,255,.58);
+  --glass-strong:rgba(255,255,255,.78);
+  --edge:rgba(255,255,255,.85);
+  --sep:rgba(60,60,67,.11);
+  --r:24px;
+  --shadow:0 10px 34px rgba(60,70,120,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","SF Arabic","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+  color:var(--label);background:#f4f5fb;min-height:100vh;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:inherit}
+button{font-family:inherit;color:inherit;cursor:pointer}
+input{font-family:inherit}
+
+/* wallpaper */
+.wall{
+  position:fixed;inset:-10%;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(45vw 45vw at 8% 4%,#ffdcec 0,transparent 62%),
+    radial-gradient(45vw 45vw at 96% 8%,#cfe2ff 0,transparent 62%),
+    radial-gradient(50vw 50vw at 82% 98%,#d6f4e4 0,transparent 62%),
+    radial-gradient(42vw 42vw at 2% 92%,#e5dcff 0,transparent 62%),
+    #f4f5fb;
+  animation:drift 26s ease-in-out infinite alternate;
+}
+@keyframes drift{to{transform:translate3d(-2%,2%,0) scale(1.06)}}
+
+.glass{
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);
+  border:1px solid var(--edge);
+  box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.9);
+  border-radius:var(--r);
+}
+
+/* layout */
+.app{max-width:820px;margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 16px 150px}
+.view.hidden{display:none}
+.view{animation:fadeUp .45s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:8px 4px 18px}
+.eyebrow{font-size:13px;font-weight:600;color:var(--label2)}
+h1.lt{font-size:clamp(28px,6vw,36px);font-weight:800;letter-spacing:-.4px;line-height:1.25}
+h2.sec{font-size:20px;font-weight:700;margin:26px 6px 10px;letter-spacing:-.2px}
+.sub{font-size:13px;color:var(--label2)}
+.fx{flex:1;min-width:0}
+.gap{display:flex;flex-direction:column;gap:12px}
+
+.ico{width:42px;height:42px;border-radius:50%;border:1px solid var(--edge);background:var(--glass-strong);
+  display:grid;place-items:center;color:var(--blue);font-size:16px;box-shadow:var(--shadow);
+  -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);transition:transform .2s}
+.ico:active{transform:scale(.92)}
+
+/* chips / tags */
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:0;
+  background:rgba(0,122,255,.10);color:var(--blue);font-weight:600;font-size:12.5px;text-decoration:none;white-space:nowrap;transition:background .2s}
+.chip:hover{background:rgba(0,122,255,.18)}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700}
+.t-blue{background:rgba(0,122,255,.12);color:#0062cc}
+.t-purple{background:rgba(175,82,222,.13);color:#8a35b8}
+.t-teal{background:rgba(48,176,199,.15);color:#1f8397}
+.t-green{background:rgba(52,199,89,.15);color:#1e8a3c}
+.t-orange{background:rgba(255,149,0,.15);color:#b86a00}
+.t-red{background:rgba(255,59,48,.12);color:#c9281d}
+.t-gray{background:rgba(120,120,128,.14);color:#58585d}
+
+/* grouped list */
+.group{overflow:hidden}
+.row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--sep)}
+.row:last-child{border-bottom:0}
+.ttl{font-weight:600;font-size:15px;line-height:1.5}
+.row .sub{margin-top:2px}
+.ck{width:28px;height:28px;flex:none;border-radius:50%;border:2px solid #c7c7cc;background:transparent;display:grid;place-items:center;
+  color:transparent;font-size:12px;transition:all .25s}
+.ck:hover{border-color:var(--blue)}
+.done>.ck,.completed>.ck,.ck.on{background:var(--green);border-color:var(--green);color:#fff}
+.row.done .ttl{color:var(--label3);text-decoration:line-through;text-decoration-color:rgba(0,0,0,.25)}
+.sec-label{display:flex;align-items:center;gap:8px;padding:12px 16px 4px;font-size:12px;font-weight:700;color:var(--label2);letter-spacing:.3px}
+.del{background:none;border:0;color:var(--label3);font-size:14px;padding:6px}
+.del:hover{color:var(--red)}
+
+/* summary */
+.summary{padding:20px;display:flex;align-items:center;gap:18px}
+.ring{position:relative;width:84px;height:84px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:19px;font-weight:800}
+.summary h3{font-size:18px;font-weight:700}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.stat-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--edge);font-size:12.5px;font-weight:600}
+.stat-chip i{color:var(--orange)}
+.stat-chip.b i{color:var(--blue)}
+
+/* exam card */
+.exam{padding:18px 20px;display:flex;align-items:center;gap:16px;margin-top:12px}
+.exam-n{font-size:34px;font-weight:800;color:var(--orange);line-height:1;min-width:64px;text-align:center}
+.exam-n small{display:block;font-size:12px;color:var(--label2);font-weight:600;margin-top:4px}
+
+/* add task */
+.addbar{display:flex;gap:8px;padding:8px 8px 8px 12px;margin-top:12px;align-items:center}
+.addbar input{flex:1;border:0;background:transparent;font-size:15px;padding:8px 10px;outline:none;color:var(--label)}
+.addbar input::placeholder{color:var(--label3)}
+
+/* timeline */
+.tl{display:flex;gap:12px;padding:13px 16px;border-bottom:1px solid var(--sep);align-items:stretch;transition:opacity .3s}
+.tl:last-child{border-bottom:0}
+.tl .bar{width:4px;border-radius:4px;flex:none}
+.tl .time{width:92px;flex:none;font-size:12.5px;color:var(--label2);font-variant-numeric:tabular-nums;direction:ltr;text-align:right;font-weight:600;padding-top:2px}
+.tl.past{opacity:.45}
+.tl.now{background:rgba(0,122,255,.07)}
+.tl.now .time{color:var(--blue)}
+.bar.blue{background:var(--blue)}.bar.purple{background:var(--purple)}.bar.teal{background:var(--teal)}
+.bar.green{background:var(--green)}.bar.red{background:var(--red)}.bar.gray{background:#c7c7cc}.bar.orange{background:var(--orange)}
+.note{font-size:12px;color:var(--label2);padding:10px 16px 14px}
+
+.quote{margin-top:22px;padding:22px 20px;text-align:center;font-weight:700;font-size:16px;color:#3a3a3c}
+
+/* segmented */
+.seg{display:flex;background:rgba(118,118,128,.13);border-radius:12px;padding:2px;margin:0 0 14px;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+.seg button{flex:1;border:0;background:transparent;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;color:var(--label2);white-space:nowrap;transition:all .25s}
+.seg button.on{background:#fff;color:var(--label);box-shadow:0 2px 8px rgba(0,0,0,.10)}
+
+/* college */
+.day-card{margin-bottom:12px}
+.day-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 8px}
+.day-head h3{font-size:17px;font-weight:700}
+.empty{padding:6px 16px 16px;color:var(--label3);font-size:13px}
+.day-card.today{border-color:rgba(0,122,255,.45);box-shadow:0 10px 34px rgba(0,122,255,.14),inset 0 1px 0 rgba(255,255,255,.9)}
+.cls{display:flex;gap:12px;padding:12px 16px;border-top:1px solid var(--sep);align-items:center}
+.cls .time{width:92px;flex:none;direction:ltr;text-align:right;font-size:12.5px;font-weight:600;color:var(--label2);font-variant-numeric:tabular-nums}
+.cls .ttl{font-size:14.5px}
+.ex-count{font-weight:800;font-size:15px;color:var(--orange);white-space:nowrap}
+.subj{padding:16px;margin-bottom:12px}
+.subj h3{font-size:16px;font-weight:700;margin-bottom:8px;direction:ltr;text-align:right}
+.subj .line{display:flex;gap:8px;align-items:center;padding:5px 0;font-size:13px;color:var(--label2)}
+
+/* cyber */
+.cy-top{padding:18px 20px;margin-bottom:12px}
+.bar-track{height:10px;border-radius:99px;background:rgba(118,118,128,.16);overflow:hidden;margin-top:10px}
+.bar-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#5ac8fa,#007aff);transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.search{display:flex;align-items:center;gap:10px;padding:10px 16px;margin-bottom:12px}
+.search i{color:var(--label3)}
+.search input{flex:1;border:0;background:transparent;outline:none;font-size:15px;color:var(--label)}
+.search input::placeholder{color:var(--label3)}
+.gi{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--sep)}
+.gi:last-child{border-bottom:0}
+.gi.locked{display:none}
+.gi.completed{background:rgba(52,199,89,.06)}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;background:rgba(0,122,255,.12);color:#0062cc;font-weight:700;font-size:12px}
+.g-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.g-course{font-size:12.5px;color:var(--label2);font-weight:600}
+.g-topic{font-weight:600;font-size:14.5px;margin-top:5px}
+.st{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.st.ok{background:rgba(52,199,89,.15);color:#1e8a3c}
+.st.cur{background:rgba(0,122,255,.12);color:#0062cc}
+.lock-note{padding:12px 16px;font-size:12.5px;color:var(--label2);border-top:1px solid var(--sep)}
+
+.soc{margin-bottom:12px;overflow:hidden}
+.soc-head{display:flex;align-items:center;gap:14px;padding:16px;cursor:pointer}
+.soc-ico{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-weight:800;font-size:17px;color:#fff;
+  background:linear-gradient(145deg,#5ac8fa,#007aff);flex:none;box-shadow:0 6px 16px rgba(0,122,255,.28)}
+.soc.completed .soc-ico{background:linear-gradient(145deg,#6ee08a,#34c759);box-shadow:0 6px 16px rgba(52,199,89,.3)}
+.period{font-size:12px;font-weight:700;color:var(--blue)}
+.soc h3{font-size:16.5px;font-weight:700;line-height:1.5}
+.chev{color:var(--label3);transition:transform .4s}
+.soc.open .chev{transform:rotate(180deg)}
+.more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)}
+.soc.open .more{grid-template-rows:1fr}
+.more-in{overflow:hidden;min-height:0;padding:0 16px}
+.soc.open .more-in{padding-bottom:16px}
+.desc{font-size:13.5px;color:var(--label2);margin-bottom:10px}
+.thm{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;background:rgba(52,199,89,.13);color:#1e8a3c;margin-bottom:12px;direction:ltr}
+.weeks{display:flex;flex-direction:column;gap:10px}
+.week{display:flex;gap:12px;padding:14px;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--edge)}
+.week.completed{background:rgba(52,199,89,.09)}
+.wk{font-size:11.5px;font-weight:700;color:var(--blue);direction:ltr;text-align:right}
+.week h4{font-size:14.5px;font-weight:700;margin:2px 0 4px;line-height:1.6}
+.week p{font-size:12.8px;color:var(--label2)}
+.links{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.proj{padding:18px}
+.proj i{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(0,122,255,.12);color:var(--blue);margin-bottom:12px}
+.proj h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.proj p{font-size:13px;color:var(--label2)}
+.proj .m{margin-top:10px;font-size:11.5px;font-weight:700;color:var(--blue);direction:ltr;text-align:right}
+
+.news-i{padding:14px 16px;border-bottom:1px solid var(--sep)}
+.news-i:last-child{border-bottom:0}
+.news-i .meta{display:flex;justify-content:space-between;font-size:11.5px;color:var(--label2);font-weight:600}
+.news-i h4{font-size:14.5px;font-weight:600;margin:6px 0 8px;line-height:1.6;direction:ltr;text-align:right}
+.loading{padding:30px;text-align:center;color:var(--label2);font-size:13px}
+
+/* tab bar */
+.tabbar{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:60;display:flex;gap:2px;padding:6px;
+  border-radius:999px;background:var(--glass-strong);border:1px solid var(--edge);
+  -webkit-backdrop-filter:blur(34px) saturate(200%);backdrop-filter:blur(34px) saturate(200%);
+  box-shadow:0 14px 40px rgba(50,60,110,.18),inset 0 1px 0 #fff}
+.tabbar button{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:76px;padding:8px 12px;border:0;background:none;border-radius:999px;
+  color:var(--label2);font-size:11px;font-weight:700;transition:all .25s}
+.tabbar button i{font-size:18px}
+.tabbar button.on{background:rgba(0,122,255,.12);color:var(--blue)}
+
+/* mini player */
+.mini{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:55;display:flex;align-items:center;gap:10px;
+  padding:8px 10px 8px 16px;border-radius:999px;max-width:calc(100vw - 24px);transition:all .35s}
+.mini.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.mini span{font-size:13px;font-weight:600;max-width:46vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini button{width:34px;height:34px;border-radius:50%;border:0;background:rgba(0,122,255,.1);color:var(--blue)}
+.mini .play{background:var(--blue);color:#fff}
+
+/* sheet */
+.sheet-bg{position:fixed;inset:0;z-index:100;background:rgba(30,35,60,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
+.sheet-bg.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:640px;z-index:101;transform:translateY(105%);transition:transform .45s cubic-bezier(.2,.8,.2,1);
+  border-radius:30px 30px 0 0;padding:10px 18px calc(22px + env(safe-area-inset-bottom));max-height:82vh;display:flex;flex-direction:column;background:rgba(250,250,254,.9)}
+.sheet.show{transform:none}
+.grab{width:40px;height:5px;border-radius:9px;background:rgba(60,60,67,.25);margin:0 auto 14px}
+.sheet h3{font-size:18px;font-weight:700;margin-bottom:12px}
+.sheet .search{margin-bottom:10px;padding:8px 14px;background:rgba(118,118,128,.12);border:0;box-shadow:none;border-radius:12px}
+.surahs{overflow-y:auto;border-radius:18px}
+.surah{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;background:rgba(255,255,255,.7);border-bottom:1px solid var(--sep);cursor:pointer;font-weight:600;font-size:15px}
+.surah:hover,.surah.on{background:rgba(0,122,255,.1);color:var(--blue)}
+.surah small{color:var(--label3);font-weight:600;margin-left:8px}
+
+/* lock screen */
+#lock{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:max(60px,env(safe-area-inset-top)) 20px max(44px,env(safe-area-inset-bottom));text-align:center;cursor:pointer;overflow:hidden;
+  background:
+    radial-gradient(60vw 60vw at 15% 10%,#ffd1e6 0,transparent 60%),
+    radial-gradient(60vw 60vw at 90% 25%,#bcd7ff 0,transparent 60%),
+    radial-gradient(70vw 70vw at 60% 100%,#c9f1db 0,transparent 60%),
+    radial-gradient(50vw 50vw at 0% 85%,#dccfff 0,transparent 60%),#eef0fa;
+  transition:transform .75s cubic-bezier(.7,0,.2,1),opacity .75s}
+#lock.up{transform:translateY(-105%);opacity:.4}
+.lk-date{font-size:clamp(17px,3.6vw,22px);font-weight:600;color:#3a3a3c;margin-top:6px}
+.lk-time{font-size:clamp(84px,22vw,150px);font-weight:700;letter-spacing:-3px;line-height:1;color:#1c1c1e;direction:ltr;font-variant-numeric:tabular-nums;
+  text-shadow:0 8px 40px rgba(255,255,255,.7)}
+.lk-hello{font-size:clamp(18px,4vw,24px);font-weight:700;margin-top:14px;color:#2c2c2e}
+.lk-mid{margin-top:2vh}
+.lk-bottom{display:flex;flex-direction:column;align-items:center;gap:14px}
+.lk-btn{padding:13px 34px;border-radius:999px;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.55);
+  -webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);font-weight:700;font-size:15px;color:#1c1c1e;box-shadow:0 10px 30px rgba(60,70,120,.15)}
+.lk-hint{font-size:12.5px;color:#6c6c70;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.lk-lockico{font-size:18px;color:#3a3a3c}
+
+/* ===== AI ===== */
+.chip.w{background:var(--glass-strong);border:1px solid var(--edge);box-shadow:0 2px 8px rgba(60,70,120,.08)}
+.ai-chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 14px;scrollbar-width:none}
+.ai-chips::-webkit-scrollbar{display:none}
+.ai-chips .chip{padding:9px 14px;font-size:13px}
+.ai-msgs{display:flex;flex-direction:column;gap:10px;padding-bottom:84px}
+.bub{max-width:88%;padding:11px 15px;border-radius:20px;font-size:14.5px;line-height:1.85;overflow-wrap:anywhere}
+.bub.me{align-self:flex-start;background:var(--blue);color:#fff;border-bottom-right-radius:6px}
+.bub.ai{align-self:flex-end;background:var(--glass-strong);border:1px solid var(--edge);box-shadow:var(--shadow);border-bottom-left-radius:6px;
+  -webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}
+.bub.err{color:var(--red)}
+.bub ul,.bub ol{padding-inline-start:20px;margin:6px 0}
+.bub h5{font-size:14.5px;margin:8px 0 2px}
+.bub pre{direction:ltr;text-align:left;background:rgba(0,0,0,.06);padding:10px 12px;border-radius:12px;overflow-x:auto;font-size:12.5px;white-space:pre-wrap;margin:8px 0;font-family:ui-monospace,Menlo,monospace}
+.bub code{direction:ltr;unicode-bidi:embed;background:rgba(0,0,0,.06);padding:1px 6px;border-radius:6px;font-size:.88em;font-family:ui-monospace,Menlo,monospace}
+.dots{display:inline-flex;gap:4px;padding:4px 2px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--label3);animation:dt 1.1s infinite}
+.dots i:nth-child(2){animation-delay:.18s}.dots i:nth-child(3){animation-delay:.36s}
+@keyframes dt{0%,80%,100%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1.1)}}
+.ai-input{position:fixed;left:50%;transform:translateX(-50%);bottom:94px;width:min(760px,calc(100vw - 24px));z-index:58;display:none;align-items:flex-end;gap:8px;padding:8px 8px 8px 10px;border-radius:28px;background:var(--glass-strong)}
+body.in-ai .ai-input{display:flex}
+body.in-ai .mini{bottom:154px}
+.ai-input textarea{flex:1;border:0;background:transparent;resize:none;outline:none;font-size:15px;padding:8px 12px;max-height:120px;font-family:inherit;color:var(--label);line-height:1.6}
+.ai-input textarea::placeholder{color:var(--label3)}
+.ai-input .send{width:38px;height:38px;border-radius:50%;border:0;background:var(--blue);color:#fff;flex:none;font-size:14px}
+.ai-input .send:disabled{opacity:.35}
+.ai-empty{padding:26px 22px;text-align:center}
+.ai-empty .big{width:58px;height:58px;margin:0 auto 12px;border-radius:19px;display:grid;place-items:center;font-size:24px;color:#fff;background:linear-gradient(145deg,#5ac8fa,#007aff,#af52de);box-shadow:0 10px 26px rgba(0,122,255,.3)}
+.ai-empty h3{font-size:18px;margin-bottom:4px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border:0;border-radius:999px;background:var(--blue);color:#fff;font-weight:700;font-size:14px;margin-top:14px}
+.btn.soft{background:rgba(0,122,255,.12);color:var(--blue);margin-top:0}
+.btn:disabled{opacity:.5}
+.brief{padding:16px 18px;margin-top:12px}
+.brief-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.brief-h .sp{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#5ac8fa,#007aff,#af52de);font-size:14px;flex:none}
+.brief-h b{font-size:15px;flex:1}
+.brief .bub{max-width:100%;padding:0;background:none;border:0;box-shadow:none;font-size:14px}
+.qz{align-self:stretch;padding:16px}
+.qz h4{font-size:15px;margin-bottom:12px}
+.qq{margin-bottom:16px}.qq p{font-weight:600;font-size:14.5px;line-height:1.7}
+.qo{display:block;width:100%;text-align:right;padding:10px 14px;margin-top:7px;border-radius:14px;border:1px solid var(--sep);background:rgba(255,255,255,.75);font-size:13.5px;line-height:1.6}
+.qo.ok{background:rgba(52,199,89,.18);border-color:var(--green)}
+.qo.bad{background:rgba(255,59,48,.12);border-color:var(--red)}
+.qe{font-size:12.5px;color:var(--label2);margin-top:7px;line-height:1.7}
+.qscore{font-weight:800;color:var(--blue);margin-top:4px}
+.fld{margin-bottom:14px}
+.fld label{display:block;font-size:12.5px;font-weight:700;color:var(--label2);margin-bottom:6px}
+.fld input{width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--sep);background:rgba(255,255,255,.8);font-size:14px;outline:none;direction:ltr;text-align:left;color:var(--label)}
+.fld input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,122,255,.12)}
+.set-note{font-size:12.5px;color:var(--label2);line-height:1.8;margin:2px 0 12px}
+.set-msg{font-size:13px;font-weight:600;margin-top:10px;min-height:20px}
+.set-msg.ok{color:#1e8a3c}.set-msg.bad{color:var(--red)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+
+@media(max-width:560px){
+  .summary{padding:16px;gap:14px}
+  .tl .time,.cls .time{width:78px;font-size:12px}
+  .tabbar button{min-width:66px;padding:8px 8px}
+  .gi{flex-wrap:wrap}
+  .gi .chip{margin-right:auto}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ===== weather widget / icons / settings ===== */
+.icos{display:flex;gap:8px;flex:none}
+a.ico{text-decoration:none}
+.wx{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;border-radius:999px;margin:2px 4px 6px;
+  background:var(--glass-strong);border:1px solid var(--edge);box-shadow:var(--shadow);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);
+  font-size:13px;font-weight:700;transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.wx.pre{opacity:0;transform:translateY(-8px) scale(.94)}
+.wxi{width:30px;height:30px;display:grid;place-items:center;font-size:21px;transition:transform .8s cubic-bezier(.2,.9,.25,1.25);color:#ff9f0a}
+.wx.intro .wxi{transform:scale(1.5)}
+.wxt{display:grid;overflow:hidden;white-space:nowrap;transition:width .65s cubic-bezier(.2,.8,.2,1)}
+.wxt>span{grid-area:1/1;justify-self:start;transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+.wl{opacity:0;transform:translateY(-8px)}
+.wx.intro .wl{opacity:1;transform:none}
+.wx.intro .wc{opacity:0;transform:translateY(8px)}
+.wclk{padding-inline-start:10px;border-inline-start:1px solid var(--sep);font-variant-numeric:tabular-nums;direction:rtl;color:var(--label2);font-weight:700}
+.lk-time small{font-size:.2em;letter-spacing:0;margin-inline-start:10px;font-weight:600;color:#6c6c70}
+button.row{width:100%;background:none;border:0;text-align:right;font:inherit;color:inherit;cursor:pointer}
+a.row{text-decoration:none;color:inherit}
+.row .chev2{color:var(--label3);font-size:12px}
+.row .ri{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:#fff;font-size:14px;flex:none}
+.steps{text-align:right;font-size:13.5px;line-height:1.9;color:var(--label2);margin:10px 18px 0;padding-inline-start:18px}
+.steps a{color:var(--blue);font-weight:700;direction:ltr;unicode-bidi:embed}
+.qlinks{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+
+.chip.w.sel{background:var(--blue);color:#fff;border-color:transparent}
+details.adv{margin:16px 18px 0;text-align:right}
+details.adv summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--blue);list-style:none;text-align:center}
+details.adv summary::-webkit-details-marker{display:none}
+[data-mode=dark] .chip.w.sel{background:var(--blue);color:#fff}
+/* ===== DARK MODE ===== */
+:root[data-mode=dark]{
+  color-scheme:dark;
+  --label:#f2f2f7;--label2:#a1a1aa;--label3:#6e6e76;
+  --blue:#0a84ff;--green:#30d158;--orange:#ff9f0a;--red:#ff453a;--purple:#bf5af2;--teal:#40c8e0;
+  --glass:rgba(38,40,58,.55);--glass-strong:rgba(44,46,66,.74);--edge:rgba(255,255,255,.11);--sep:rgba(255,255,255,.09);
+  --shadow:0 10px 34px rgba(0,0,0,.40);
+}
+[data-mode=dark] body{background:#0b0c14}
+[data-mode=dark] .wall{background:
+  radial-gradient(45vw 45vw at 8% 4%,#3b1d4c 0,transparent 62%),
+  radial-gradient(45vw 45vw at 96% 8%,#16315e 0,transparent 62%),
+  radial-gradient(50vw 50vw at 82% 98%,#103f2e 0,transparent 62%),
+  radial-gradient(42vw 42vw at 2% 92%,#2a2262 0,transparent 62%),#0b0c14}
+[data-mode=dark] .glass{box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.07)}
+[data-mode=dark] .stat-chip,[data-mode=dark] .week,[data-mode=dark] .qo,[data-mode=dark] .fld input,[data-mode=dark] .surah{background:rgba(255,255,255,.07)}
+[data-mode=dark] .week.completed{background:rgba(48,209,88,.12)}
+[data-mode=dark] .qo.ok{background:rgba(48,209,88,.2)}
+[data-mode=dark] .qo.bad{background:rgba(255,69,58,.18)}
+[data-mode=dark] .quote{color:#d1d1d6}
+[data-mode=dark] .seg{background:rgba(118,118,128,.28)}
+[data-mode=dark] .seg button.on{background:#636366;color:#fff}
+[data-mode=dark] .tabbar{box-shadow:0 14px 40px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08)}
+[data-mode=dark] .sheet{background:rgba(26,27,42,.94)}
+[data-mode=dark] .day-card.today{box-shadow:0 10px 34px rgba(10,132,255,.2),inset 0 1px 0 rgba(255,255,255,.07)}
+[data-mode=dark] .ck{border-color:#5a5a62}
+[data-mode=dark] .tl.now{background:rgba(10,132,255,.14)}
+[data-mode=dark] .gi.completed{background:rgba(48,209,88,.08)}
+[data-mode=dark] .chip{background:rgba(10,132,255,.2)}
+[data-mode=dark] .chip:hover{background:rgba(10,132,255,.32)}
+[data-mode=dark] .chip.w{background:rgba(255,255,255,.09)}
+[data-mode=dark] .pill{background:rgba(10,132,255,.22);color:#7dbcff}
+[data-mode=dark] .t-blue{background:rgba(10,132,255,.22);color:#7dbcff}
+[data-mode=dark] .t-purple{background:rgba(191,90,242,.22);color:#d9a2f7}
+[data-mode=dark] .t-teal{background:rgba(64,200,224,.2);color:#7fdcee}
+[data-mode=dark] .t-green{background:rgba(48,209,88,.2);color:#6fe28d}
+[data-mode=dark] .t-orange{background:rgba(255,159,10,.2);color:#ffbf5a}
+[data-mode=dark] .t-red{background:rgba(255,69,58,.2);color:#ff8f87}
+[data-mode=dark] .t-gray{background:rgba(255,255,255,.1);color:#c7c7cc}
+[data-mode=dark] .st.ok{background:rgba(48,209,88,.2);color:#6fe28d}
+[data-mode=dark] .st.cur{background:rgba(10,132,255,.22);color:#7dbcff}
+[data-mode=dark] .thm{background:rgba(48,209,88,.16);color:#6fe28d}
+[data-mode=dark] .btn.soft{background:rgba(10,132,255,.22)}
+[data-mode=dark] .bub code,[data-mode=dark] .bub pre{background:rgba(255,255,255,.09)}
+[data-mode=dark] .set-msg.ok{color:#6fe28d}
+[data-mode=dark] .lk-time small{color:#a1a1aa}
+[data-mode=dark] #lock{background:
+  radial-gradient(60vw 60vw at 15% 10%,#4a1f55 0,transparent 60%),
+  radial-gradient(60vw 60vw at 90% 25%,#17356a 0,transparent 60%),
+  radial-gradient(70vw 70vw at 60% 100%,#10402f 0,transparent 60%),
+  radial-gradient(50vw 50vw at 0% 85%,#2e2468 0,transparent 60%),#0b0c14}
+[data-mode=dark] .lk-date{color:#d1d1d6}
+[data-mode=dark] .lk-time{color:#fff;text-shadow:0 8px 40px rgba(10,132,255,.35)}
+[data-mode=dark] .lk-hello{color:#e5e5ea}
+[data-mode=dark] .lk-lockico{color:#d1d1d6}
+[data-mode=dark] .lk-hint{color:#a1a1aa}
+[data-mode=dark] .lk-btn{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+/* ===== tap effects ===== */
+.ico,.chip,.btn,.tabbar button,.seg button,.qo,.lk-btn,.send,.mini button,.ck,.surah,.del{transition:transform .18s cubic-bezier(.2,.8,.2,1),background .2s,box-shadow .2s,border-color .2s,color .2s}
+.ico:active,.chip:active,.btn:active,.tabbar button:active,.seg button:active,.qo:active,.lk-btn:active,.send:active,.mini button:active,.ck:active,.surah:active{transform:scale(.93)}
+button.row:active,a.row:active,.soc-head:active,.gi:active{background:rgba(120,120,128,.12)}
+.tap-fx{position:fixed;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;pointer-events:none;z-index:3000;
+  background:radial-gradient(circle,rgba(0,122,255,.34),rgba(0,122,255,0) 70%);transform:scale(.2);opacity:1;animation:tapfx .6s ease-out forwards}
+@keyframes tapfx{to{transform:scale(2.3);opacity:0}}
+.ck.pop{animation:ckpop .45s cubic-bezier(.2,.9,.3,1.5)}
+@keyframes ckpop{0%{transform:scale(.7)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+.quote{cursor:pointer;user-select:none;transition:opacity .25s ease,transform .25s ease}
+.quote.swap{opacity:0;transform:translateY(6px)}
+/* college logo button */
+.ico.clgb{padding:0;overflow:hidden;background:#fff;border-radius:14px;border-color:rgba(0,0,0,.06)}
+.ico.clgb img{width:100%;height:100%;display:block;object-fit:cover}
+.ri.clgi{background:#fff;overflow:hidden;padding:0}
+.ri.clgi img{width:100%;height:100%;object-fit:cover}
+.lk-logo{width:60px;height:60px;border-radius:15px;box-shadow:0 10px 30px rgba(20,30,80,.25)}
+#setSheet,#aiSet{overflow-y:auto}
+/* ios switch + select */
+.sw{width:51px;height:31px;border-radius:99px;border:0;background:rgba(120,120,128,.32);position:relative;flex:none;transition:background .25s}
+.sw i{position:absolute;top:2px;right:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.28);transition:transform .28s cubic-bezier(.2,.9,.3,1.2)}
+.sw[aria-checked=true]{background:var(--green)}
+.sw[aria-checked=true] i{transform:translateX(-20px)}
+.sel{border:0;background:rgba(120,120,128,.16);color:var(--label);border-radius:10px;padding:7px 10px;font:inherit;font-size:13.5px;font-weight:600;outline:none}
+/* ===== DARK = pure black ===== */
+:root[data-mode=dark]{--glass:rgba(28,28,30,.62);--glass-strong:rgba(36,36,38,.80);--edge:rgba(255,255,255,.10);--sep:rgba(255,255,255,.09)}
+[data-mode=dark] body{background:#000}
+[data-mode=dark] .wall{background:#000;animation:none}
+[data-mode=dark] #lock{background:#000}
+[data-mode=dark] .lk-time{text-shadow:none}
+[data-mode=dark] .sheet{background:rgba(18,18,20,.96)}
+[data-mode=dark] .day-card.today{box-shadow:0 10px 34px rgba(10,132,255,.14),inset 0 1px 0 rgba(255,255,255,.06)}
+[data-mode=dark] .tabbar{background:rgba(28,28,30,.82)}
+[data-mode=dark] .wx{background:rgba(28,28,30,.8)}
+[data-mode=dark] .sw i{background:#fff}
+[data-mode=dark] .tap-fx{background:radial-gradient(circle,rgba(10,132,255,.45),rgba(10,132,255,0) 70%)}
+</style>
+</head>
+<body>
+<div class="wall" aria-hidden="true"></div>
+
+<!-- LOCK SCREEN -->
+<div id="lock" role="button" tabindex="0" aria-label="الدخول">
+  <div>
+    <img class="lk-logo" src="icons/icon-192.png" alt="" onerror="this.outerHTML='<i class=&quot;fa-solid fa-lock lk-lockico&quot;></i>'">
+    <div class="lk-date" id="lkDate"></div>
+  </div>
+  <div class="lk-mid">
+    <div class="lk-time" id="lkTime">00:00</div>
+    <div class="lk-hello" id="lkHello"></div>
+  </div>
+  <div class="lk-bottom">
+    <button class="lk-btn" type="button">ادخل يومك</button>
+    <div class="lk-hint"><i class="fa-solid fa-chevron-up"></i> اسحب لفوق</div>
+  </div>
+</div>
+
+<main class="app">
+
+  <!-- TODAY -->
+  <section id="v-today" class="view">
+    <div class="wx intro pre" id="wx" aria-live="polite">
+      <span class="wxi" id="wxI"><i class="fa-solid fa-cloud-sun"></i></span>
+      <span class="wxt"><span class="wl">الإسكندرية · العجمي</span><span class="wc" id="wxC">...</span></span>
+      <span class="wclk" id="wxClk"></span>
+    </div>
+    <div class="topbar">
+      <div>
+        <div class="eyebrow" id="tDate"></div>
+        <h1 class="lt" id="tHello"></h1>
+      </div>
+      <div class="icos">
+        <a class="ico clgb" href="https://batechu.com/" target="_blank" rel="noopener noreferrer" aria-label="موقع جامعة برج العرب التكنولوجية"><img class="clg" alt=""></a>
+        <button class="ico" id="quranBtn" type="button" aria-label="القرآن الكريم"><i class="fa-solid fa-book-quran"></i></button>
+        <button class="ico" id="setBtn" type="button" aria-label="الإعدادات"><i class="fa-solid fa-gear"></i></button>
+      </div>
+    </div>
+    <div id="tSummary"></div>
+    <div id="tExam"></div>
+    <div id="tAI"></div>
+
+    <h2 class="sec">مهام النهاردة</h2>
+    <div id="tTasks"></div>
+    <form id="addForm" class="addbar glass" autocomplete="off">
+      <input id="addInput" placeholder="ضيف مهمة ليك..." maxlength="120">
+      <button type="submit" class="chip"><i class="fa-solid fa-plus"></i> إضافة</button>
+    </form>
+
+    <h2 class="sec">يومك بالترتيب</h2>
+    <div id="tTimeline"></div>
+
+    <div class="quote glass" id="tQuote"></div>
+  </section>
+
+  <!-- COLLEGE -->
+  <section id="v-college" class="view hidden">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow">العلوم الأساسية · الفرقة الأولى · جامعة برج العرب التكنولوجية</div>
+        <h1 class="lt">الكلية</h1>
+      </div>
+      <a class="ico clgb" href="https://batechu.com/" target="_blank" rel="noopener noreferrer" aria-label="موقع جامعة برج العرب التكنولوجية"><img class="clg" alt=""></a>
+    </div>
+    <div class="seg" id="segCol">
+      <button data-v="week" class="on">الجدول</button>
+      <button data-v="exams">الميد تيرم</button>
+      <button data-v="subs">المواد</button>
+    </div>
+    <div id="colBody"></div>
+  </section>
+
+  <!-- CYBER -->
+  <section id="v-cyber" class="view hidden">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow">مسار السايبر سيكيورتي</div>
+        <h1 class="lt">سايبر سيكيورتي</h1>
+      </div>
+    </div>
+
+    <div class="cy-top glass">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <b>نسبة الإنجاز</b>
+        <b id="cyPct" style="color:var(--blue)">0%</b>
+      </div>
+      <div class="bar-track"><div class="bar-fill" id="cyFill"></div></div>
+      <div class="sub" style="margin-top:8px" id="cyCount"></div>
+    </div>
+
+    <div class="search glass">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="cySearch" placeholder="ابحث عن يوم، موضوع أو أداة...">
+    </div>
+
+    <div class="seg" id="segCy">
+      <button data-v="g" class="on">Google — 25 يوم</button>
+      <button data-v="soc">SOC — 12 شهر</button>
+      <button data-v="proj">مشاريع</button>
+      <button data-v="news">أخبار</button>
+    </div>
+
+    <div id="cy-g">
+      <div class="sub" style="margin:0 6px 10px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <span>الأيام بتتفتح واحد ورا واحد — خلّص اليوم عشان يظهر اللي بعده.</span>
+        <a class="chip" href="https://www.coursera.org/professional-certificates/google-cybersecurity" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> الكورس على Coursera</a>
+      </div>
+      <div class="glass group" id="gList"></div>
+    </div>
+    <div id="cy-soc" style="display:none"></div>
+    <div id="cy-proj" style="display:none"></div>
+    <div id="cy-news" style="display:none"></div>
+  </section>
+
+  <!-- AI -->
+  <section id="v-ai" class="view hidden">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow">اسأل وإنت جوه الموقع · بيعرف جدولك</div>
+        <h1 class="lt">المساعد</h1>
+      </div>
+      <button class="ico" id="aiSetBtn" type="button" aria-label="إعدادات المساعد"><i class="fa-solid fa-sliders"></i></button>
+    </div>
+    <div class="ai-chips" id="aiChips"></div>
+    <div class="ai-msgs" id="aiMsgs"></div>
+  </section>
+
+</main>
+
+<form id="aiForm" class="ai-input glass" autocomplete="off">
+  <textarea id="aiIn" rows="1" placeholder="اسألني أي حاجة..."></textarea>
+  <button class="send" id="aiSend" type="submit" aria-label="إرسال"><i class="fa-solid fa-arrow-up"></i></button>
+</form>
+
+<div class="sheet glass" id="setSheet">
+  <div class="grab"></div>
+  <h3><i class="fa-solid fa-gear" style="color:var(--blue)"></i> الإعدادات</h3>
+  <div class="fld">
+    <label>المظهر</label>
+    <div class="seg" id="themeSeg" style="margin:0"><button type="button" data-v="auto">تلقائي</button><button type="button" data-v="light">فاتح</button><button type="button" data-v="dark">داكن</button></div>
+    <p class="set-note" style="margin-top:8px">"تلقائي" بيتبع إعداد جهازك: فاتح أو داكن زي ما موبايلك أو الكمبيوتر مظبوط.</p>
+  </div>
+  <div class="fld">
+    <label>تذكير الصلاة على النبي ﷺ</label>
+    <div class="glass group" style="border-radius:20px">
+      <div class="row"><div class="fx"><div class="ttl">تفعيل التذكير</div><div class="sub" id="salahSub">بيبعتلك إشعار كل فترة</div></div><button class="sw" id="salahSw" type="button" role="switch" aria-checked="false" aria-label="تفعيل التذكير"><i></i></button></div>
+      <div class="row"><div class="fx"><div class="ttl">كل قد إيه؟</div></div>
+        <select class="sel" id="salahInt"><option value="10">10 دقايق</option><option value="15">15 دقيقة</option><option value="30">30 دقيقة</option><option value="60">ساعة</option><option value="120">ساعتين</option></select></div>
+      <div class="row"><div class="fx"><div class="ttl">اسكت بالليل</div><div class="sub">من 12 بالليل لـ 6 الصبح</div></div><button class="sw" id="quietSw" type="button" role="switch" aria-checked="true" aria-label="هدوء الليل"><i></i></button></div>
+    </div>
+    <div class="btns" style="margin-top:10px"><button class="btn soft" id="salahTest" type="button">جرّب إشعار دلوقتي</button></div>
+    <p class="set-note" id="salahNote" style="margin-top:8px">الإشعارات بتشتغل والتطبيق مفتوح أو متثبّت على جهازك.</p>
+  </div>
+  <div class="fld">
+    <label>التطبيق</label>
+    <button class="btn" id="installBtn" type="button" style="margin-top:0"><i class="fa-solid fa-download"></i> تثبيت التطبيق</button>
+    <p class="set-note" id="installNote" style="margin-top:8px"></p>
+  </div>
+  <div class="glass group" style="border-radius:20px">
+    <button class="row" type="button" data-aiset="1"><span class="ri" style="background:var(--blue)"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div class="fx"><div class="ttl">إعدادات المساعد</div><div class="sub">مفتاح Gemini والموديل</div></div><i class="fa-solid fa-chevron-left chev2"></i></button>
+    <a class="row" href="https://batechu.com/" target="_blank" rel="noopener noreferrer"><span class="ri clgi"><img class="clg" alt=""></span><div class="fx"><div class="ttl">موقع الكلية</div><div class="sub">batechu.com</div></div><i class="fa-solid fa-arrow-up-right-from-square chev2"></i></a>
+  </div>
+</div>
+
+<div class="sheet glass" id="aiSet">
+  <div class="grab"></div>
+  <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--blue)"></i> إعدادات المساعد</h3>
+  <div class="fld"><label for="aiKeyIn">Gemini API Key</label><input id="aiKeyIn" type="password" placeholder="AIza..." autocomplete="off" spellcheck="false"></div>
+  <div class="fld"><label for="aiModelIn">الموديل</label><input id="aiModelIn" list="aiModels" placeholder="gemini-flash-latest" spellcheck="false"><datalist id="aiModels"></datalist></div>
+  <p class="set-note">المفتاح بيتحفظ في متصفحك إنت بس ومبيتبعتش غير لـ Google. لو هتنشر الموقع أونلاين قيّد المفتاح بنطاق موقعك من Google AI Studio.</p>
+  <div class="btns">
+    <button class="btn" type="button" id="aiSave">حفظ واختبار</button>
+    <button class="btn soft" type="button" id="aiList">عرض الموديلات</button>
+    <button class="btn soft" type="button" id="aiClear">مسح المحادثة</button>
+  </div>
+  <div class="set-msg" id="aiSetMsg"></div>
+</div>
+
+<!-- mini player -->
+<div class="mini glass" id="mini">
+  <button type="button" id="mPrev" aria-label="السابق"><i class="fa-solid fa-backward-step"></i></button>
+  <button type="button" id="mPlay" class="play" aria-label="تشغيل / إيقاف"><i class="fa-solid fa-pause"></i></button>
+  <button type="button" id="mNext" aria-label="التالي"><i class="fa-solid fa-forward-step"></i></button>
+  <span id="mTitle"></span>
+</div>
+
+<!-- tab bar -->
+<nav class="tabbar" id="tabbar">
+  <button type="button" data-tab="today" class="on"><i class="fa-solid fa-sun"></i>اليوم</button>
+  <button type="button" data-tab="college"><i class="fa-solid fa-graduation-cap"></i>الكلية</button>
+  <button type="button" data-tab="cyber"><i class="fa-solid fa-shield-halved"></i>سايبر</button>
+  <button type="button" data-tab="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>مساعد</button>
+</nav>
+
+<!-- quran sheet -->
+<div class="sheet-bg" id="sheetBg"></div>
+<div class="sheet glass" id="sheet">
+  <div class="grab"></div>
+  <h3><i class="fa-solid fa-headphones" style="color:var(--blue)"></i> تلاوات الشيخ محمد اللحيدان</h3>
+  <div class="search glass"><i class="fa-solid fa-magnifying-glass"></i><input id="surahSearch" placeholder="ابحث عن سورة..."></div>
+  <div class="surahs" id="surahList"></div>
+</div>
+<audio id="quranAudio"></audio>
+
+<script>
+const googleDays=[
+["اليوم 1","الدورة 1: أسس الأمن السيبراني","مرحباً بك في عالم الأمن السيبراني + تطور الأمن السيبراني","https://www.coursera.org/learn/foundations-of-cybersecurity"],
+["اليوم 2","الدورة 1: أسس الأمن السيبراني","الحماية من التهديدات والمخاطر ونقاط الضعف","https://www.coursera.org/learn/foundations-of-cybersecurity"],
+["اليوم 3","الدورة 1: أسس الأمن السيبراني","أدوات الأمن السيبراني ولغات البرمجة","https://www.coursera.org/learn/foundations-of-cybersecurity"],
+["اليوم 4","الدورة 2: إدارة المخاطر","نطاقات الأمان + الأطر والضوابط الأمنية","https://www.coursera.org/learn/manage-security-risks"],
+["اليوم 5","الدورة 2: إدارة المخاطر","أدوات الأمن السيبراني + Playbooks","https://www.coursera.org/learn/manage-security-risks"],
+["اليوم 6","الدورة 3: شبكات وأمن الشبكات","بنية الشبكة Network Architecture","https://www.coursera.org/learn/networks-and-network-security"],
+["اليوم 7","الدورة 3: شبكات وأمن الشبكات","عمليات الشبكة Network Operations","https://www.coursera.org/learn/networks-and-network-security"],
+["اليوم 8","الدورة 3: شبكات وأمن الشبكات","التأمين ضد اختراقات الشبكة + Hardening","https://www.coursera.org/learn/networks-and-network-security"],
+["اليوم 9","الدورة 4: أنظمة التشغيل وSQL","مقدمة في أنظمة التشغيل + Linux","https://www.coursera.org/learn/linux-and-sql"],
+["اليوم 10","الدورة 4: أنظمة التشغيل وSQL","أوامر Linux في Bash Shell","https://www.coursera.org/learn/linux-and-sql"],
+["اليوم 11","الدورة 4: أنظمة التشغيل وSQL","قواعد البيانات بلغة SQL","https://www.coursera.org/learn/linux-and-sql"],
+["اليوم 12","الدورة 5: الأصول والتهديدات","مقدمة في أمن الأصول + حماية الأصول المؤسسية","https://www.coursera.org/learn/asset-security"],
+["اليوم 13","الدورة 5: الأصول والتهديدات","نقاط الضعف في الأنظمة + التهديدات الأمنية","https://www.coursera.org/learn/asset-security"],
+["اليوم 14","الدورة 6: الكشف والاستجابة","مقدمة في الكشف والاستجابة للحوادث","https://www.coursera.org/learn/detection-and-response"],
+["اليوم 15","الدورة 6: الكشف والاستجابة","مراقبة الشبكة وتحليلها باستخدام SIEM","https://www.coursera.org/learn/detection-and-response"],
+["اليوم 16","الدورة 6: الكشف والاستجابة","التحقيق في الحوادث + تحليل حركة المرور والسجلات","https://www.coursera.org/learn/detection-and-response"],
+["اليوم 17","الدورة 7: الأتمتة باستخدام Python","Python Syntax + Variables","https://www.coursera.org/learn/automate-cybersecurity-tasks-with-python"],
+["اليوم 18","الدورة 7: الأتمتة باستخدام Python","كتابة كود Python + Log Parsing","https://www.coursera.org/learn/automate-cybersecurity-tasks-with-python"],
+["اليوم 19","الدورة 7: الأتمتة باستخدام Python","السلاسل والقوائم + Python في الأمن السيبراني","https://www.coursera.org/learn/automate-cybersecurity-tasks-with-python"],
+["اليوم 20","الدورة 8: الاستعداد للوظائف","حماية البيانات + الإبلاغ عن الحوادث + Escalation","https://www.coursera.org/learn/prepare-for-cybersecurity-jobs"],
+["اليوم 21","الدورة 8: الاستعداد للوظائف","التواصل + المجتمعات المهنية","https://www.coursera.org/learn/prepare-for-cybersecurity-jobs"],
+["اليوم 22","الدورة 8: الاستعداد للوظائف","استخدام الذكاء الاصطناعي لتحسين سير العمل","https://www.coursera.org/learn/prepare-for-cybersecurity-jobs"],
+["اليوم 23","الدورة 9: البحث عن وظيفة بالذكاء الاصطناعي","اكتشاف المهارات + التخطيط للبحث عن وظيفة","https://www.coursera.org/learn/accelerate-your-job-search-with-ai"],
+["اليوم 24","الدورة 9: البحث عن وظيفة بالذكاء الاصطناعي","إدارة طلبات الوظائف + تحسين البورتفوليو","https://www.coursera.org/learn/accelerate-your-job-search-with-ai"],
+["اليوم 25","الدورة 9: البحث عن وظيفة بالذكاء الاصطناعي","التدرب على المقابلات + تجهيز CV","https://www.coursera.org/learn/accelerate-your-job-search-with-ai"]
+];
+const socData=[
+["الشهر 1 - 2","الشبكات العملاقة — Networking Mastery","OSI & TCP/IP, Subnetting, Firewalls وتحليل الحزم عبر Wireshark.","Network Fundamentals",[["NetworkChuck","https://www.youtube.com/@NetworkChuck"],["Jeremy's IT Lab","https://www.youtube.com/@JeremysITLab"]]],
+["الشهر 3 - 4","إدارة أنظمة Linux","CLI Commands, File System, Permissions وBash Scripting.","Linux Fundamentals",[["Linux Journey","https://linuxjourney.com/"],["OverTheWire","https://overthewire.org/wargames/"]]],
+["الشهر 5 - 6","Windows & Active Directory","Windows Server, Active Directory, GPO وتحليل Event Logs.","Windows Event Logs",[["Microsoft Learn","https://learn.microsoft.com/"],["Windows Learning","https://www.youtube.com/@NTFAQGuy"]]],
+["الشهر 7","Python for SOC","Loops, RegEx، البحث في السجلات وLog Parsing باستخدام Python.","Python Basics",[["Automate the Boring Stuff","https://automatetheboringstuff.com/"]]],
+["الشهر 8 - 9","SIEM & EDR","Splunk SPL Queries، Detection Rules وWazuh.","Splunk Core Skills",[["Splunk Training","https://www.splunk.com/en_us/training.html"],["Wazuh","https://wazuh.com/"]]],
+["الشهر 10","Phishing & CTI","تحليل Email Headers، فحص المرفقات واستخراج IoCs.","Phishing Analysis",[["VirusTotal","https://www.virustotal.com/"],["PhishTool","https://www.phishtool.com/"]]],
+["الشهر 11","Incident Response & Home Lab","Memory Forensics، EDR Containment وبناء Virtual Lab.","SOC Level 1",[["LetsDefend","https://letsdefend.io/"],["Blue Team Labs Online","https://blueteamlabs.online/"]]],
+["الشهر 12","Portfolio + Certificates + Career","توثيق المشاريع على GitHub، تجهيز CV والاستعداد للشهادات.","Challenge Rooms",[["GitHub","https://github.com/"],["CompTIA Security+","https://www.comptia.org/certifications/security"]]]
+];
+const socDetails=[
+
+/* =====================================================
+   1 — NETWORKING
+===================================================== */
+
+[
+{
+week:"Week 1–2",
+title:"موديلات الاتصال وعناوين الـ IP (OSI, TCP/IP & Subnetting)",
+description:"فهم طبقات الاتصال وكيفية حساب النطاقات وتوزيع العناوين وعمل الـ Subnetting.",
+links:[
+["🔗 مصدر Cisco NetAcad","https://www.netacad.com/"],
+["💻 روم عملي: Intro to Networking","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 3–4",
+title:"بروتوكولات الإنترنت وتحليل الحزم (DNS, DHCP, Wireshark)",
+description:"تتبع بروتوكولات الطبقات العليا، وكشف ثغرات DNS Tunneling واستخدام Wireshark لتحليل ملفات PCAP.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Packet Analysis with Wireshark","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 5–6",
+title:"جدران الحماية، الأجهزة، ونظام كشف التسلل (Firewalls & IDS/IPS)",
+description:"فهم أدوار الـ Firewalls، الـ ACLs، والفروق بين الـ IDS والـ IPS.",
+links:[
+["🔗 مرجع Jeremy's IT Lab","https://www.youtube.com/@JeremysITLab"],
+["💻 روم عملي: Snort & IDS/IPS Labs","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 7–8",
+title:"مراقبة سجلات الشبكة والمحاكاة العملية (Network Logs)",
+description:"تحليل الـ Logs القادمة من أجهزة الشبكة واكتشاف الشذوذ والسلوكيات الخبيثة.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Network Traffic Analysis","https://tryhackme.com/"]
+]
+}
+],
+
+/* =====================================================
+   2 — LINUX
+===================================================== */
+
+[
+{
+week:"Week 1–2",
+title:"أوامر سطر الأوامر وبنية نظام الملفات (CLI & File System)",
+description:"التنقل السريع، البحث المتقدم (find, grep, awk)، وفهم مجلدات النظام الحساسة مثل /etc و /var/log.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Linux Fundamentals Path","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 3–4",
+title:"إدارة الصلاحيات والعمليات (Permissions & Processes)",
+description:"تحليل صلاحيات الملفات (chmod, chown)، كشف ثغرات الصلاحيات، ومراقبة العمليات الجارية (ps, top).",
+links:[
+["🔗 مرجع Coursera","https://www.coursera.org/"],
+["💻 روم عملي: Linux Server Security & Privileges","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 5–6",
+title:"البرمجة النصية بلغة باش (Bash Scripting Basics)",
+description:"كتابة سكريبتات Bash لتنفيذ مهام الفحص السريع، استخدام المتغيرات، الحلقات، والتحكم.",
+links:[
+["🔗 مرجع Coursera","https://www.coursera.org/"],
+["💻 روم عملي: Bash Scripting for Automation","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 7–8",
+title:"تحليل السجلات الأمنية والاستجابة للحوادث على لينكس (Linux IR)",
+description:"معالجة سجلات المصادقة (/var/log/auth.log) وكتابة سكريبت شامل لفحص النظام واستخراج الأدلة.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Linux Forensics & Log Analysis","https://tryhackme.com/"]
+]
+}
+],
+
+/* =====================================================
+   3 — WINDOWS & ACTIVE DIRECTORY
+===================================================== */
+
+[
+{
+week:"Week 1–2",
+title:"العمليات الداخلية وسجلات Sysmon (Windows Internals & Sysmon)",
+description:"مراقبة العمليات والخيوط، وإعداد تثبيت Sysmon وأهم Event IDs الخاصة بالتحليل الأمني.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Windows Event Logs & Sysmon Room","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 3–4",
+title:"مراقبة PowerShell واستمرار المهاجمين (Persistence & PowerShell Logs)",
+description:"تفعيل Script Block Logging وكشف هجمات الـ Fileless والمفاتيح المشبوهة في الريجستري والمهام المجدولة.",
+links:[
+["🔗 مرجع Coursera","https://www.coursera.org/"],
+["💻 روم عملي: PowerShell for Security & Persistence","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 5–6",
+title:"هندسة Active Directory وبروتوكولات المصادقة (AD & Kerberos)",
+description:"فهم مكونات الـ AD (Domain Controller, GPO, LDAP) ودورة حياة تذاكر Kerberos.",
+links:[
+["🔗 مرجع Microsoft Learn / Cisco","https://www.netacad.com/"],
+["💻 روم عملي: Intro to Active Directory","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 7–8",
+title:"كشف هجمات Active Directory ومراقبتها (AD Attacks & Defense)",
+description:"دراسة وكشف هجمات مثل Kerberoasting, Golden Tickets، واستخدام BloodHound وتحليل سجلات الـ DC.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Active Directory Security & Attacks","https://tryhackme.com/"]
+]
+}
+],
+
+/* =====================================================
+   4 — PYTHON FOR SOC
+===================================================== */
+
+[
+{
+week:"Week 1",
+title:"أساسيات بايثون وهياكل البيانات والتحكم",
+description:"المتغيرات، الجمل الشرطية، الحلقات التكرارية (Loops)، وهياكل البيانات الأساسية لبناء السكريبتات الأمنية.",
+links:[
+["🔗 مرجع بايثون الرسمي","https://www.python.org/"],
+["💻 روم تطبيق TryHackMe: Python Basics","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 2",
+title:"التعابير المنتظمة ومعالجة الملفات (RegEx & Files)",
+description:"استخراج الـ IPs والـ URLs والـ Hashes باستخدام RegEx، وقراءة وكتابة ملفات الـ Logs.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: RegEx for Security Analysts","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 3",
+title:"التعامل مع الـ APIs والتهديدات السيبرانية",
+description:"استخدام مكتبة requests للتعامل مع REST APIs وربط السكريبتات بمنصات تحليل التهديدات.",
+links:[
+["🔗 مرجع Coursera","https://www.coursera.org/"],
+["💻 روم عملي: Python API Integration","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 4",
+title:"أتمتة السجلات وبناء أدوات الاستجابة (Automation & SOAR)",
+description:"بناء سكريبت متكامل لفحص سجلات النظام، الكشف عن الأنشطة المشبوهة، وأتمتة الاستجابة.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 مشروع عملي: Build a SOAR Script","https://tryhackme.com/"]
+]
+}
+],
+
+/* =====================================================
+   5 — SIEM & EDR
+===================================================== */
+
+[
+{
+week:"Week 1–2",
+title:"أساسيات الـ SIEM ولغات الاستعلام (KQL / Splunk SPL)",
+description:"جمع الـ Logs من المصادر المختلفة وإتقان كتابة الاستعلامات للبحث داخل السجلات.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Splunk / Sentinel Basics Lab","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 3–4",
+title:"هندسة الكشف والفرز الأولي (Detection Engineering & Alert Triage)",
+description:"تحويل مؤشرات التهديد لقواعد كشف فعالة، تقييم قواعد Sigma، والتعامل مع الإيجابيات الكاذبة.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: SOC Level 1 Triage Labs","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 5–6",
+title:"أنظمة EDR وتحليل سلوك العمليات (EDR Telemetry)",
+description:"مراقبة الذاكرة الحية والعمليات عبر منصات الـ EDR وتتبع الـ LOLBins وحقن العمليات.",
+links:[
+["🔗 مصدر Cisco CyberOps","https://www.netacad.com/"],
+["💻 روم عملي: Endpoint Security & EDR Labs","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 7–8",
+title:"العزل والاستجابة السريعة (Endpoint Isolation & Integration)",
+description:"عزل الأجهزة المصابة عن الشبكة، إيقاف العمليات الخبيثة، وربط تنبيهات SIEM بتحقيقات EDR.",
+links:[
+["🔗 مرجع Coursera","https://www.coursera.org/"],
+["💻 روم عملي: Incident Containment & SIEM/EDR Integration","https://tryhackme.com/"]
+]
+}
+],
+
+/* =====================================================
+   6 — PHISHING & CTI
+===================================================== */
+
+[
+{
+week:"Week 1",
+title:"تحليل البريد الاحتيالي والهيدرز (Email Headers Analysis)",
+description:"فهم هجمات Phishing و Spear Phishing، وقراءة وتحليل الهيدر الخاص بالبريد لكشف المصادر المزيفة.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Phishing Analysis Rooms","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 2",
+title:"الفحص الآمن للروابط والمرفقات (URL & Attachment Triage)",
+description:"تحليل الروابط المشبوهة وملفات الماكرو أو PDF الخبيثة بأمان تام.",
+links:[
+["🔗 مرجع Coursera","https://www.coursera.org/"],
+["💻 روم عملي: Malicious Document Analysis","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 3",
+title:"استخبارات التهديدات ودورة حياتها (CTI Lifecycle & MITRE)",
+description:"فهم أنواع CTI الثلاثة وإطار عمل MITRE ATT&CK لتصنيف الهجمات.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Cyber Threat Intelligence Path","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 4",
+title:"مؤشرات الاختراق ومنصات المشاركة (IoCs & MISP)",
+description:"استخراج وإدارة الـ IoCs واستخدام منصات مثل MISP و VirusTotal.",
+links:[
+["🔗 مرجع Cisco NetAcad","https://www.netacad.com/"],
+["💻 روم عملي: Threat Hunting with IoCs","https://tryhackme.com/"]
+]
+}
+],
+
+/* =====================================================
+   7 — INCIDENT RESPONSE & HOME LAB
+===================================================== */
+
+[
+{
+week:"Week 1",
+title:"مراحل الاستجابة للحوادث بحسب NIST (IR Lifecycle)",
+description:"دراسة مراحل التجهيز، الاحتواء، الاستئصال، التعافي، والدروس المستفادة عند حدوث اختراق.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Incident Response Basics","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 2",
+title:"جمع الأدلة الرقمية وأخذ صور الذاكرة (Forensics & RAM)",
+description:"استخراج الأدلة المتطايرة (Volatile Data) وأخذ صور للذاكرة العشوائية (RAM Capture).",
+links:[
+["🔗 مرجع Coursera","https://www.coursera.org/"],
+["💻 روم عملي: Digital Forensics & Memory Analysis","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 3",
+title:"بناء المعمل المنزلي الأمني (Home Lab Setup)",
+description:"إعداد بيئة افتراضية متكاملة وتثبيت SIEM تجريبي (ELK/Splunk) مع أجهزة ضحية.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: Building a SOC Home Lab","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 4",
+title:"تنفيذ محاكاة الحوادث وكتابة التقارير (Attack Simulation & IR)",
+description:"تطبيق هجمات آمنة داخل معملك، مراقبة التنبيهات، وكتابة تقارير الاستجابة للحوادث.",
+links:[
+["🔗 مرجع Cisco NetAcad","https://www.netacad.com/"],
+["💻 روم عملي: Practical Incident Response Lab","https://tryhackme.com/"]
+]
+}
+],
+
+/* =====================================================
+   8 — PORTFOLIO + CERTIFICATES + CAREER
+===================================================== */
+
+[
+{
+week:"Week 1",
+title:"توثيق المشاريع وبناء معرض العمل (Portfolio Building)",
+description:"إنشاء حساب GitHub أو موقع احترافي لتوثيق مشاريع الـ Home Lab وسكريبتات بايثون وتقارير الـ IR.",
+links:[
+["🔗 مرجع GitHub","https://github.com/"],
+["💻 روم عملي: Documenting Your Security Projects","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 2",
+title:"خريطة الشهادات المعتمدة للـ SOC (Certifications Road)",
+description:"التخطيط لاجتياز الشهادات المطلوبة في سوق العمل (مثل CompTIA Security+, Cisco CyberOps, TryHackMe SOC Level 1).",
+links:[
+["🔗 مرجع Coursera","https://www.coursera.org/"],
+["💻 روم عملي: CompTIA / SOC Exam Prep Labs","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 3",
+title:"تحسين السيرة الذاتية وملف لينكد إن (CV & LinkedIn Optimization)",
+description:"صياغة السيرة الذاتية لتناسب وظائف الـ SOC Analyst وإبراز المهارات التقنية بالكلمات المفتاحية.",
+links:[
+["🔗 مرجع LinkedIn Guide","https://www.linkedin.com/"],
+["💻 روم عملي: Cybersecurity Career Readiness","https://tryhackme.com/"]
+]
+},
+{
+week:"Week 4",
+title:"التحضير للمقابلات التقنية والتقديم (Interview Prep)",
+description:"التدرب على أسئلة المقابلات الخاصة بتحليل الحوادث (Scenario-based questions) والتقديم على الوظائف.",
+links:[
+["🔗 مصدر TryHackMe","https://tryhackme.com/"],
+["💻 روم عملي: SOC Analyst Interview Simulation","https://tryhackme.com/"]
+]
+}
+]
+
+];
+const surahs=[
+["001","سورة الفاتحة"],["002","سورة البقرة"],["003","سورة آل عمران"],["004","سورة النساء"],
+["005","سورة المائدة"],["006","سورة الأنعام"],["007","سورة الأعراف"],["008","سورة الأنفال"],
+["009","سورة التوبة"],["010","سورة يونس"],["011","سورة هود"],["012","سورة يوسف"],
+["013","سورة الرعد"],["014","سورة إبراهيم"],["015","سورة الحجر"],["016","سورة النحل"],
+["017","سورة الإسراء"],["018","سورة الكهف"],["019","سورة مريم"],["020","سورة طه"],
+["021","سورة الأنبياء"],["022","سورة الحج"],["023","سورة المؤمنون"],["024","سورة النور"],
+["025","سورة الفرقان"],["026","سورة الشعراء"],["027","سورة النمل"],["028","سورة القصص"],
+["029","سورة العنكبوت"],["030","سورة الروم"],["031","سورة لقمان"],["032","سورة السجدة"],
+["033","سورة الأحزاب"],["034","سورة سبأ"],["035","سورة فاطر"],["036","سورة يس"],
+["037","سورة الصافات"],["038","سورة ص"],["039","سورة الزمر"],["040","سورة غافر"],
+["041","سورة فصلت"],["042","سورة الشورى"],["043","سورة الزخرف"],["044","سورة الدخان"],
+["045","سورة الجاثية"],["046","سورة الأحقاف"],["047","سورة محمد"],["048","سورة الفتح"],
+["049","سورة الحجرات"],["050","سورة ق"],["051","سورة الذاريات"],["052","سورة الطور"],
+["053","سورة النجم"],["054","سورة القمر"],["055","سورة الرحمن"],["056","سورة الواقعة"],
+["057","سورة الحديد"],["058","سورة المجادلة"],["059","سورة الحشر"],["060","سورة الممتحنة"],
+["061","سورة الصف"],["062","سورة الجمعة"],["063","سورة المنافقون"],["064","سورة التغابن"],
+["065","سورة الطلاق"],["066","سورة التحريم"],["067","سورة الملك"],["068","سورة القلم"],
+["069","سورة الحاقة"],["070","سورة المعارج"],["071","سورة نوح"],["072","سورة الجن"],
+["073","سورة المزمل"],["074","سورة المدثر"],["075","سورة القيامة"],["076","سورة الإنسان"],
+["077","سورة المرسلات"],["078","سورة النبأ"],["079","سورة النازعات"],["080","سورة عبس"],
+["081","سورة التكوير"],["082","سورة الانفطار"],["083","سورة المطففين"],["084","سورة الانشقاق"],
+["085","سورة البروج"],["086","سورة الطارق"],["087","سورة الأعلى"],["088","سورة الغاشية"],
+["089","سورة الفجر"],["090","سورة البلد"],["091","سورة الشمس"],["092","سورة الليل"],
+["093","سورة الضحى"],["094","سورة الشرح"],["095","سورة التين"],["096","سورة العلق"],
+["097","سورة القدر"],["098","سورة البينة"],["099","سورة الزلزلة"],["100","سورة العاديات"],
+["101","سورة القارعة"],["102","سورة التكاثر"],["103","سورة العصر"],["104","سورة الهمزة"],
+["105","سورة الفيل"],["106","سورة قريش"],["107","سورة الماعون"],["108","سورة الكوثر"],
+["109","سورة الكافرون"],["110","سورة النصر"],["111","سورة المسد"],["112","سورة الإخلاص"],
+["113","سورة الفلق"],["114","سورة الناس"]
+];
+const quotes=[
+"مش لازم تحس بالحماس عشان تبدأ… ابدأ والحماس هيجي.",
+"ساعة مذاكرة دلوقتي أحسن من ليلة قلق قبل الامتحان.",
+"الانضباط إنك تعمل المهمة حتى لو مزاجك مش معاك.",
+"كل Alert بتفهمه النهاردة هو حادثة هتمنعها بعدين.",
+"خلّص المهمة الصغيرة… الكبيرة بتتبني منها.",
+"التعب مؤقت، والمهارة بتفضل معاك.",
+"اللي بيذاكر بهدوء بيوصل أسرع من اللي بيذاكر بقلق.",
+"متقارنش بدايتك بنص حد تاني.",
+"٢٥ دقيقة تركيز بجد أحسن من ٣ ساعات مع الموبايل.",
+"اقفل الموبايل، افتح الكتاب، وابدأ بأسهل حاجة.",
+"الصلاة على النبي ﷺ بتفتح الأبواب وتهدّي القلب.",
+"﴿وَقُل رَّبِّ زِدْنِي عِلْمًا﴾",
+"الاستمرار بيكسب الموهبة لما الموهبة تتكاسل.",
+"النهاردة يوم واحد من ألف يوم هيغيّروا حياتك.",
+"اللي بتعمله النهاردة بيبني اللي هتبقاه بعد سنة.",
+"السايبر مش سحر… دي عادات صغيرة بتتكرر كل يوم.",
+"ركّز على اللي في إيدك: المهمة الجاية بس.",
+"الراحة جزء من الخطة مش عدو ليها.",
+"نام كويس… المخ بيثبّت اللي ذاكرته وإنت نايم.",
+"غلطة النهاردة هي درس الامتحان بكرة.",
+"ابدأ ناقص وكمّل وإنت ماشي.",
+"الطريق طويل… بس كل خطوة بتتحسب.",
+"افتخر بنفسك على كل مهمة خلصتها، حتى الصغيرة.",
+"الثقة بتتبني من الوعود الصغيرة اللي بتوفّي بيها لنفسك.",
+"اسأل لما متفهمش… الغلط إنك تسكت.",
+"اللي ذاكر امبارح بيهدى النهاردة.",
+"حافظ على سلسلة أيامك… كل يوم بيشيل خطوة من الطريق.",
+"ربنا مبيضيّعش تعب حد ماشي بإخلاص.",
+"مش لازم تبقى الأول، المهم تبقى أحسن من نفسك امبارح.",
+"اللي بيبدأ بدري بيخلص مرتاح."
+];
+
+/* =====================================================
+   HELPERS
+===================================================== */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const PKEY="mo3absCyberProgress",DKEY="lifeos_done",CKEY="lifeos_custom",AKEY="lifeos_activity",TKEY="lifeos_cyber_today",TABKEY="lifeos_tab";
+const lsGet=(k,f)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const pad=n=>String(n).padStart(2,"0");
+const isoOf=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const toMin=t=>{const [h,m]=t.split(":").map(Number);return h*60+m};
+const fmt=m=>`${pad(Math.floor(m/60)%24)}:${pad(m%60)}`;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl=u=>{try{const p=new URL(u);return /^https?:$/.test(p.protocol)?p.href:"#"}catch(e){return "#"}};
+const uniq=a=>[...new Set(a)];
+const DAYS=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const MONTHS=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+const KIND={lec:{n:"محاضرة",c:"blue"},lab:{n:"معمل",c:"purple"},sec:{n:"سكشن",c:"teal"}};
+
+/* =====================================================
+   COLLEGE DATA  (من جدولك الأسبوعي وجدول الميد تيرم)
+   لو حابب تعدّل حاجة: عدّل هنا بس.
+===================================================== */
+const SCHEDULE={
+  6:[{s:"Physics",k:"lab",a:"10:30",b:"11:50",r:"قاعة G-18",t:"الشيماء أحمد"}],
+  0:[
+    {s:"Chemistry",k:"lab",a:"09:00",b:"10:20",r:"قاعة f-16",t:"محمد أحمد"},
+    {s:"Anatomy",k:"lec",a:"10:30",b:"11:10",r:"مدرج 2",t:"نادية الياس"},
+    {s:"Human physiology",k:"lec",a:"11:10",b:"11:50",r:"مدرج 2",t:"أسماء علاء"},
+    {s:"Anatomy",k:"lab",a:"13:30",b:"14:50",r:"قاعة f-16",t:"نور الهدى مسعود + رنا حافظ"}
+  ],
+  1:[],
+  2:[
+    {s:"Information Technology",k:"lab",a:"09:40",b:"10:20",r:"قاعة f-16",t:"فيروز محمود"},
+    {s:"Mathematics",k:"lec",a:"10:30",b:"11:10",r:"مدرج 2",t:"حسين جاد"},
+    {s:"Physics",k:"lec",a:"11:10",b:"11:50",r:"مدرج 2",t:"حسين جاد"}
+  ],
+  3:[
+    {s:"Information Technology",k:"lec",a:"09:00",b:"09:40",r:"مدرج 2",t:"هيمن"},
+    {s:"Chemistry",k:"lec",a:"09:40",b:"10:20",r:"مدرج 2",t:"إيمان حسن السيد حسن"},
+    {s:"Human physiology",k:"lab",a:"10:30",b:"11:50",r:"مدرج 1",t:"منة ماهر"},
+    {s:"English 1",k:"lec",a:"13:30",b:"14:50",r:"ONLINE",t:"خالد عيسى"}
+  ],
+  4:[
+    {s:"Mathematics",k:"sec",a:"10:30",b:"11:50",r:"قاعة G3",t:"مريم عبد الناصر"},
+    {s:"Healthcare facility safety",k:"lec",a:"15:00",b:"15:40",r:"قاعة 1 online",t:"محمد سعيد"},
+    {s:"Ethics",k:"lec",a:"15:40",b:"16:20",r:"قاعة 1 online",t:"فاطمة حسين"}
+  ],
+  5:[]
+};
+const WEEK_ORDER=[6,0,1,2,3,4];
+
+const EXAMS=[
+  {s:"Human anatomy",d:"2026-11-15"},
+  {s:"Mathematics",d:"2026-11-16"},
+  {s:"Human physiology",d:"2026-11-17"},
+  {s:"Chemistry",d:"2026-11-18"},
+  {s:"Physics",d:"2026-11-19"}
+];
+const EXAM_START="10:00",EXAM_END="11:00";
+
+/* خطة مذاكرة الميد تيرم — يومياً مهمة أو اتنين (m = دقايق) */
+const PLAN={
+  "2026-11-08":[{s:"Anatomy",t:"قسّم منهج Anatomy على أيام المذاكرة وخلّص الجزء الأول",m:90}],
+  "2026-11-09":[{s:"Anatomy",t:"الجزء التاني من Anatomy + راجع المصطلحات والرسومات",m:120}],
+  "2026-11-10":[{s:"Anatomy",t:"الجزء التالت من Anatomy + اختبر نفسك في اللي فات",m:90},{s:"Mathematics",t:"أول ساعة Mathematics: القوانين الأساسية",m:60}],
+  "2026-11-11":[{s:"Mathematics",t:"حل مسائل Mathematics (ساعتين على الأقل)",m:120},{s:"Physiology",t:"الجزء الأول من Human physiology",m:60}],
+  "2026-11-12":[{s:"Physiology",t:"الجزء التاني من Human physiology + ملخص بخط إيدك",m:90},{s:"Mathematics",t:"مراجعة سريعة لمسائل Mathematics",m:45}],
+  "2026-11-13":[{s:"Anatomy",t:"مراجعة شاملة لـ Anatomy (الامتحان بعد يومين)",m:90},{s:"Chemistry",t:"الجزء الأول من Chemistry",m:60}],
+  "2026-11-14":[{s:"Anatomy",t:"مراجعة أخيرة Anatomy — امتحان بكرة 10:00، ونام بدري",m:90},{s:"Mathematics",t:"مراجعة أخيرة لقوانين Mathematics",m:45}],
+  "2026-11-15":[{s:"Mathematics",t:"مراجعة نهائية Mathematics — امتحان بكرة 10:00",m:90},{s:"Physics",t:"الجزء الأول من Physics",m:60}],
+  "2026-11-16":[{s:"Physiology",t:"مراجعة نهائية Human physiology — امتحان بكرة 10:00",m:90},{s:"Chemistry",t:"الجزء التاني من Chemistry",m:60}],
+  "2026-11-17":[{s:"Chemistry",t:"مراجعة نهائية Chemistry — امتحان بكرة 10:00",m:90},{s:"Physics",t:"الجزء التاني من Physics",m:60}],
+  "2026-11-18":[{s:"Physics",t:"مراجعة نهائية Physics — امتحان بكرة 10:00",m:120}],
+  "2026-11-19":[{s:"Physics",t:"امتحان Physics النهاردة — راجع القوانين ربع ساعة بس وركّز",m:15}]
+};
+
+function classSubjects(dow){return uniq((SCHEDULE[dow]||[]).map(c=>c.s))}
+
+function collegeTasks(iso,dow){
+  const out=[];
+  const p=PLAN[iso];
+  const subs=classSubjects(dow);
+  if(p){
+    p.forEach((x,n)=>out.push({id:`col-${iso}-${n}`,s:x.s,t:x.t,m:x.m||60}));
+    if(subs.length) out.push({id:`col-${iso}-r`,s:"مراجعة",t:`راجع محاضرات النهاردة: ${subs.join("، ")} (٢٠ دقيقة لكل مادة)`,m:Math.min(60,subs.length*20)});
+  }else{
+    if(subs.length) out.push({id:`col-${iso}-r`,s:"مراجعة",t:`راجع محاضرات النهاردة: ${subs.join("، ")} (٢٠ دقيقة لكل مادة)`,m:Math.min(80,subs.length*20)});
+    const tom=classSubjects((dow+1)%7);
+    if(tom.length) out.push({id:`col-${iso}-n`,s:"تحضير",t:`بصّ على محاضرات بكرة: ${tom.join("، ")} (١٥ دقيقة)`,m:15});
+    if(!out.length) out.push({id:`col-${iso}-f`,s:"مراجعة",t:"يوم بدون محاضرات — خد ساعة كاملة على مادة حاسس إنك متأخر فيها",m:60});
+  }
+  return out;
+}
+
+/* =====================================================
+   STATE
+===================================================== */
+let cyberDone=new Set(lsGet(PKEY,[]));
+let done=lsGet(DKEY,{});
+let custom=lsGet(CKEY,{});
+let activity=new Set(lsGet(AKEY,[]));
+const ui={tab:"today",col:"week",cy:"g"};
+
+function gId(i){return `google-${i+1}`}
+function wId(i,j){return `soc-${i+1}-week-${j+1}`}
+/* توافق مع الحفظ القديم لمراحل SOC */
+[...cyberDone].forEach(id=>{
+  if(/^soc-\d+$/.test(id)){
+    const i=+id.split("-")[1]-1;
+    (socDetails[i]||[]).forEach((_,j)=>cyberDone.add(wId(i,j)));
+    cyberDone.delete(id);
+  }
+});
+
+function saveCyber(){lsSet(PKEY,[...cyberDone])}
+function markActivity(){const t=isoOf(new Date());if(!activity.has(t)){activity.add(t);lsSet(AKEY,[...activity])}}
+function streak(){
+  const d=new Date();
+  if(!activity.has(isoOf(d)))d.setDate(d.getDate()-1);
+  let n=0;
+  while(activity.has(isoOf(d))){n++;d.setDate(d.getDate()-1)}
+  return n;
+}
+
+/* ---------- cyber logic (same rules as the original) ---------- */
+function googleUnlocked(i){for(let k=0;k<i;k++)if(!cyberDone.has(gId(k)))return false;return true}
+function toggleGoogle(i){
+  const id=gId(i);
+  if(!googleUnlocked(i))return;
+  if(cyberDone.has(id)){for(let k=i;k<googleDays.length;k++)cyberDone.delete(gId(k))}
+  else{cyberDone.add(id);markActivity()}
+  afterCyber();
+}
+function toggleWeek(i,j){
+  const id=wId(i,j);
+  if(cyberDone.has(id))cyberDone.delete(id);else{cyberDone.add(id);markActivity()}
+  afterCyber();
+}
+function afterCyber(){saveCyber();updateCyberUI();renderToday()}
+
+function pickCyber(){
+  for(let i=0;i<googleDays.length;i++)if(!cyberDone.has(gId(i)))return {k:"g",i};
+  for(let i=0;i<socDetails.length;i++)for(let j=0;j<socDetails[i].length;j++)if(!cyberDone.has(wId(i,j)))return {k:"w",i,j};
+  return null;
+}
+function cyberToday(iso){
+  const st=lsGet(TKEY,null);
+  if(st&&st.date===iso&&st.ref!==undefined)return st.ref;
+  const ref=pickCyber();
+  lsSet(TKEY,{date:iso,ref});
+  return ref;
+}
+function refInfo(r){
+  if(r.k==="g"){
+    const d=googleDays[r.i];
+    return {id:`g:${r.i}`,title:d[2],sub:`${d[0]} · ${d[1]}`,link:d[3],done:cyberDone.has(gId(r.i))};
+  }
+  const w=socDetails[r.i][r.j];
+  return {id:`w:${r.i}:${r.j}`,title:w.title,sub:`${socData[r.i][1]} · ${w.week}`,link:(w.links[0]||[])[1]||"",done:cyberDone.has(wId(r.i,r.j))};
+}
+function toggleRefId(id){
+  const p=id.split(":");
+  if(p[0]==="g")toggleGoogle(+p[1]);else toggleWeek(+p[1],+p[2]);
+}
+
+/* =====================================================
+   TODAY
+===================================================== */
+const hello=h=>h<5?"سهران يا محمد؟":h<12?"صباح الخير يا محمد":h<17?"نهارك سعيد يا محمد":h<21?"مساء الخير يا محمد":"ليلتك سعيدة يا محمد";
+const dateLong=d=>`${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]}`;
+const dayDiff=(iso,now)=>{
+  const a=new Date(iso+"T00:00:00"),b=new Date(isoOf(now)+"T00:00:00");
+  return Math.round((a-b)/864e5);
+};
+
+function buildTimeline(iso,dow,col,cinfo){
+  const items=[];
+  (SCHEDULE[dow]||[]).forEach(c=>items.push({a:toMin(c.a),b:toMin(c.b),t:c.s,sub:`${KIND[c.k].n} · ${c.r} · ${c.t}`,c:KIND[c.k].c}));
+  const exam=EXAMS.find(e=>e.d===iso);
+  if(exam)items.push({a:toMin(EXAM_START),b:toMin(EXAM_END),t:`امتحان ${exam.s}`,sub:"ميد تيرم · 10:00 – 11:00",c:"red"});
+  const busy=items.length>0;
+  const first=busy?Math.min(...items.map(x=>x.a)):600;
+  const lastEnd=busy?Math.max(...items.map(x=>x.b)):0;
+  const wakeA=Math.max(360,first-75);
+  items.push({a:wakeA,b:wakeA+15,t:"ابدأ يومك",sub:"بص على مهامك وجهّز لأول حاجة",c:"gray"});
+  let t=busy?lastEnd+60:660;
+  if(exam)t=Math.max(t,720);
+  t=Math.ceil(t/5)*5;
+  const cm=Math.min(180,Math.max(45,col.reduce((a,x)=>a+x.m,0)));
+  items.push({a:t,b:t+cm,t:"مذاكرة الكلية",sub:uniq(col.map(x=>x.s)).slice(0,3).join(" · "),c:"blue"});
+  t+=cm+15;
+  if(cinfo){items.push({a:t,b:t+60,t:"سايبر سيكيورتي",sub:cinfo.title,c:"green"});t+=75}
+  items.push({a:t,b:t+15,t:"مراجعة سريعة وتخطيط بكرة",sub:"اقفل اليوم وشوف بكرة فيه إيه",c:"gray"});
+  return items.sort((x,y)=>x.a-y.a);
+}
+
+
+function renderToday(){
+  const now=new Date(),iso=isoOf(now),dow=now.getDay();
+  $("#tDate").textContent=dateLong(now);
+  $("#tHello").textContent=hello(now.getHours());
+
+  const col=collegeTasks(iso,dow);
+  const ref=cyberToday(iso);
+  const cinfo=ref?refInfo(ref):null;
+  const cust=custom[iso]||[];
+
+  const total=col.length+(cinfo?1:0)+cust.length;
+  const dn=col.filter(x=>done[x.id]).length+(cinfo&&cinfo.done?1:0)+cust.filter(x=>done[x.id]).length;
+  const pct=total?Math.round(dn/total*100):0;
+  const st=streak();
+
+  /* summary */
+  $("#tSummary").innerHTML=`
+  <div class="summary glass">
+    <div class="ring">
+      <svg width="84" height="84" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(118,118,128,.16)" stroke-width="7"/>
+        <circle cx="32" cy="32" r="26" fill="none" stroke="url(#rg)" stroke-width="7" stroke-linecap="${pct?"round":"butt"}" stroke-dasharray="${(pct*1.634).toFixed(1)} 163.4" style="transition:stroke-dasharray .8s"/>
+        <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5ac8fa"/><stop offset="1" stop-color="#007aff"/></linearGradient></defs>
+      </svg>
+      <b>${pct}%</b>
+    </div>
+    <div class="fx">
+      <h3>${dn===total&&total?"خلّصت يومك":"خلّصت "+dn+" من "+total}</h3>
+      <div class="sub">${dn===total&&total?"عاش، اقفل اليوم وارتاح":"كمّل خطوة خطوة"}</div>
+      <div class="stats">
+        <span class="stat-chip"><i class="fa-solid fa-fire"></i> ${st} ${st===1?"يوم":"أيام"} متتالية</span>
+        <span class="stat-chip b"><i class="fa-solid fa-shield-halved"></i> ${cyberPercent()}% سايبر</span>
+      </div>
+    </div>
+  </div>`;
+
+  /* next exam */
+  const nowT=Date.now();
+  const nx=EXAMS.find(e=>new Date(`${e.d}T${EXAM_END}:00`).getTime()>nowT);
+  if(nx){
+    const dd=dayDiff(nx.d,now);
+    const big=dd===0?"النهاردة":dd===1?"بكرة":dd;
+    $("#tExam").innerHTML=`
+    <div class="exam glass">
+      <div class="exam-n">${big}${typeof big==="number"?"<small>يوم</small>":""}</div>
+      <div class="fx"><div class="sub">الامتحان الجاي</div><div class="ttl" style="font-size:17px;direction:ltr;text-align:right">${esc(nx.s)}</div>
+      <div class="sub">${dateLong(new Date(nx.d+"T12:00:00"))} · 10:00 – 11:00</div></div>
+      <i class="fa-solid fa-hourglass-half" style="color:var(--orange);font-size:20px"></i>
+    </div>`;
+  }else $("#tExam").innerHTML="";
+
+  /* tasks */
+  const taskRow=t=>`
+    <div class="row ${t.done?"done":""}">
+      <button class="ck" type="button" data-act="${t.act}" data-id="${esc(t.id)}" aria-label="تم"><i class="fa-solid fa-check"></i></button>
+      <div class="fx"><div class="ttl">${esc(t.title)}</div><div class="sub">${t.sub}</div></div>
+      ${t.del?"":`<button class="chip w" type="button" data-ai-ask="${esc(t.act==="cy"?`اشرحلي "${t.title}" بالتفصيل وبأمثلة بسيطة، وبعدها اسألني 3 أسئلة تثبيت.`:`ساعدني أذاكر: ${t.title}`)}" aria-label="اسأل المساعد"><i class="fa-solid fa-wand-magic-sparkles"></i></button>`}
+      ${t.link?`<a class="chip" href="${esc(safeUrl(t.link))}" target="_blank" rel="noopener noreferrer">فتح</a>`:""}
+      ${t.del?`<button class="del" type="button" data-act="del" data-id="${esc(t.id)}" aria-label="حذف"><i class="fa-solid fa-trash-can"></i></button>`:""}
+    </div>`;
+
+  let html=`<div class="glass group">`;
+  html+=`<div class="sec-label"><i class="fa-solid fa-graduation-cap" style="color:var(--blue)"></i> الكلية</div>`;
+  html+=col.map(x=>taskRow({act:"c",id:x.id,title:x.t,sub:`<span class="tag t-blue">${esc(x.s)}</span> · ${x.m} دقيقة`,done:!!done[x.id]})).join("");
+  html+=`<div class="sec-label"><i class="fa-solid fa-shield-halved" style="color:var(--green)"></i> سايبر سيكيورتي</div>`;
+  html+=cinfo?taskRow({act:"cy",id:cinfo.id,title:cinfo.title,sub:`<span class="tag t-green">${esc(cinfo.sub)}</span>`,link:cinfo.link,done:cinfo.done})
+    :`<div class="row"><div class="fx"><div class="ttl">خلّصت المسار كله 🎉</div><div class="sub">كمّل مشاريعك وحضّر للشهادات</div></div></div>`;
+  if(cust.length){
+    html+=`<div class="sec-label"><i class="fa-solid fa-list-check" style="color:var(--orange)"></i> مهامي</div>`;
+    html+=cust.map(x=>taskRow({act:"c",id:x.id,title:x.t,sub:"مهمة شخصية",done:!!done[x.id],del:true})).join("");
+  }
+  html+=`</div>`;
+  $("#tTasks").innerHTML=html;
+
+  /* timeline */
+  const nm=now.getHours()*60+now.getMinutes();
+  const tl=buildTimeline(iso,dow,col,cinfo);
+  const inExamWeek=iso>=EXAMS[0].d&&iso<=EXAMS[EXAMS.length-1].d;
+  $("#tTimeline").innerHTML=`<div class="glass group">`+tl.map(x=>`
+    <div class="tl ${x.b<=nm?"past":""} ${x.a<=nm&&nm<x.b?"now":""}">
+      <div class="time">${fmt(x.a)} – ${fmt(x.b)}</div>
+      <div class="bar ${x.c}"></div>
+      <div class="fx"><div class="ttl" style="direction:auto">${esc(x.t)}</div><div class="sub">${esc(x.sub)}</div></div>
+    </div>`).join("")+
+    (inExamWeek?`<div class="note">أسبوع امتحانات — اتأكد من الكلية لو المحاضرات شغالة أو متأجلة.</div>`:"")+`</div>`;
+
+  paintQuote();
+  renderAIBrief();
+}
+
+/* =====================================================
+   COLLEGE
+===================================================== */
+function classRow(c){
+  return `<div class="cls"><div class="time">${c.a} – ${c.b}</div>
+    <div class="fx"><div class="ttl" style="direction:ltr;text-align:right">${esc(c.s)}</div><div class="sub">${esc(c.r)} · ${esc(c.t)}</div></div>
+    <span class="tag t-${KIND[c.k].c}">${KIND[c.k].n}</span></div>`;
+}
+function renderCollege(){
+  const body=$("#colBody"),now=new Date(),todayDow=now.getDay();
+  if(ui.col==="week"){
+    body.innerHTML=WEEK_ORDER.map(d=>{
+      const cl=SCHEDULE[d]||[];
+      return `<div class="glass day-card ${d===todayDow?"today":""}">
+        <div class="day-head"><h3>${DAYS[d]}</h3>${d===todayDow?'<span class="tag t-blue">النهاردة</span>':`<span class="sub">${cl.length} حصص</span>`}</div>
+        ${cl.length?cl.map(classRow).join(""):'<div class="empty">مفيش محاضرات</div>'}
+      </div>`}).join("")+
+      `<div class="glass day-card"><div class="day-head"><h3>الجمعة</h3><span class="sub">إجازة</span></div><div class="empty">يوم راحة أو مذاكرة حرة</div></div>`;
+  }else if(ui.col==="exams"){
+    let h=`<div class="glass group">`+EXAMS.map(e=>{
+      const dd=dayDiff(e.d,now);
+      const txt=dd<0?"خلص":dd===0?"النهاردة":dd===1?"بكرة":`بعد ${dd} يوم`;
+      return `<div class="row"><div class="fx"><div class="ttl" style="direction:ltr;text-align:right">${esc(e.s)}</div>
+        <div class="sub">${dateLong(new Date(e.d+"T12:00:00"))} · 10:00 – 11:00</div></div>
+        <span class="ex-count" style="${dd<0?"color:var(--label3)":""}">${txt}</span></div>`}).join("")+`</div>`;
+    h+=`<h2 class="sec">خطة المذاكرة</h2>`;
+    h+=Object.keys(PLAN).sort().map(iso=>{
+      const dd=new Date(iso+"T12:00:00");
+      const tasks=PLAN[iso];
+      return `<div class="glass group" style="margin-bottom:12px"><div class="sec-label">${dateLong(dd)}${iso===isoOf(now)?' · <span style="color:var(--blue)">النهاردة</span>':""}</div>`+
+        tasks.map((x,n)=>{const id=`col-${iso}-${n}`;return `<div class="row ${done[id]?"done":""}">
+          <button class="ck" type="button" data-act="c" data-id="${id}"><i class="fa-solid fa-check"></i></button>
+          <div class="fx"><div class="ttl">${esc(x.t)}</div><div class="sub"><span class="tag t-blue">${esc(x.s)}</span> · ${x.m} دقيقة</div></div></div>`}).join("")+`</div>`;
+    }).join("");
+    body.innerHTML=h;
+  }else{
+    const map={};
+    Object.keys(SCHEDULE).forEach(d=>(SCHEDULE[d]||[]).forEach(c=>{(map[c.s]=map[c.s]||[]).push({d:+d,c})}));
+    body.innerHTML=Object.keys(map).sort().map(s=>`
+      <div class="glass subj"><h3>${esc(s)}</h3>
+      ${map[s].map(x=>`<div class="line"><span class="tag t-${KIND[x.c.k].c}">${KIND[x.c.k].n}</span> ${DAYS[x.d]} ${x.c.a} · ${esc(x.c.r)}</div>`).join("")}
+      </div>`).join("");
+  }
+}
+
+/* =====================================================
+   CYBER UI
+===================================================== */
+const PROJECTS=[
+  ["fa-file-code","Log Parser بـ Python","ابنِ أداة تقرأ ملف Logs وتستخرج الأحداث المهمة وتعرضها في تقرير بسيط.","PYTHON • LOG ANALYSIS"],
+  ["fa-chart-line","Mini SOC Dashboard","اعمل Dashboard تعرض عدد التنبيهات وأنواعها من بيانات تدريبية آمنة.","SIEM • VISUALIZATION"],
+  ["fa-envelope-open-text","Phishing Report","حلّل رسالة بريد تدريبية، استخرج المؤشرات، واكتب تقرير Incident مختصر.","PHISHING • CTI"],
+  ["fa-robot","Detection Rule Pack","اكتب قواعد كشف تعليمية على Logs تجريبية مع تقليل الـ False Positives.","DETECTION • BLUE TEAM"],
+  ["fa-house-laptop","Home Lab Documentation","وثّق معملك التعليمي في README مرتب يصلح للـ Portfolio.","HOME LAB • GITHUB"],
+  ["fa-clipboard-check","Incident Response Case","ابنِ Case Study من Alert إلى Investigation ثم تقرير نهائي.","IR • REPORTING"]
+];
+
+function buildCyber(){
+  /* Google list */
+  $("#gList").innerHTML=googleDays.map((d,i)=>`
+    <div class="gi" data-g="${i}">
+      <button class="ck" type="button" data-act="gday" data-i="${i}" aria-label="إنجاز ${esc(d[0])}"><i class="fa-solid fa-check"></i></button>
+      <div class="fx">
+        <div class="g-top"><span class="pill">${esc(d[0])}</span><span class="g-course">${esc(d[1])}</span></div>
+        <div class="g-topic">${esc(d[2])}</div>
+      </div>
+      <span class="st" data-st></span>
+      <a class="chip" href="${esc(safeUrl(d[3]))}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> فتح الكورس</a>
+    </div>`).join("")+`<div class="lock-note" id="gNote"></div>`;
+
+  /* SOC */
+  $("#cy-soc").innerHTML=socData.map((it,i)=>`
+    <article class="glass soc" data-soc="${i}">
+      <div class="soc-head" data-act="socopen">
+        <div class="soc-ico">${i+1}</div>
+        <div class="fx"><div class="period">${esc(it[0])}</div><h3>${esc(it[1])}</h3><div class="sub" data-sp="${i}"></div></div>
+        <i class="fa-solid fa-chevron-down chev"></i>
+      </div>
+      <div class="more"><div class="more-in">
+        <p class="desc">${esc(it[2])}</p>
+        <div class="thm"><i class="fa-solid fa-gamepad"></i> TryHackMe: ${esc(it[3])}</div>
+        <div class="weeks">${(socDetails[i]||[]).map((w,j)=>`
+          <div class="week" data-w="${i}-${j}">
+            <button class="ck" type="button" data-act="week" data-i="${i}" data-j="${j}" aria-label="إنجاز ${esc(w.week)}"><i class="fa-solid fa-check"></i></button>
+            <div class="fx"><div class="wk">${esc(w.week)}</div><h4>${esc(w.title)}</h4><p>${esc(w.description)}</p>
+              <div class="links">${w.links.map(l=>`<a class="chip" href="${esc(safeUrl(l[1]))}" target="_blank" rel="noopener noreferrer">${esc(l[0].replace(/^[^\p{L}\p{N}]+/u,""))}</a>`).join("")}</div>
+            </div>
+          </div>`).join("")}</div>
+      </div></div>
+    </article>`).join("");
+
+  /* projects */
+  $("#cy-proj").innerHTML=`<div class="pgrid">`+PROJECTS.map(p=>`
+    <article class="glass proj"><i class="fa-solid ${p[0]}"></i><h3>${esc(p[1])}</h3><p>${esc(p[2])}</p><div class="m">// ${esc(p[3])}</div></article>`).join("")+`</div>`;
+
+  /* news shell */
+  $("#cy-news").innerHTML=`<div class="glass group" id="newsList"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل الأخبار...</div></div>`;
+}
+
+function cyberTotals(){
+  const g=googleDays.length;
+  let w=0;socDetails.forEach(a=>w+=a.length);
+  let gd=0;for(let i=0;i<g;i++)if(cyberDone.has(gId(i)))gd++;
+  let wd=0;socDetails.forEach((a,i)=>a.forEach((_,j)=>{if(cyberDone.has(wId(i,j)))wd++}));
+  return {total:g+w,done:gd+wd,gd,wd};
+}
+function cyberPercent(){const t=cyberTotals();return t.total?Math.round(t.done/t.total*100):0}
+
+function updateCyberUI(){
+  let cur=-1;
+  googleDays.forEach((_,i)=>{
+    const el=$(`[data-g="${i}"]`);if(!el)return;
+    const comp=cyberDone.has(gId(i)),unl=googleUnlocked(i);
+    el.classList.toggle("completed",comp);
+    el.classList.toggle("locked",!unl);
+    const st=$("[data-st]",el);
+    if(comp){st.className="st ok";st.textContent="مكتمل"}
+    else if(unl){st.className="st cur";st.textContent="الحالي";cur=i}
+    else{st.className="st";st.textContent=""}
+  });
+  const note=$("#gNote");
+  if(note)note.textContent=cur>=0?`فاضل ${googleDays.length-cur-1} يوم بعد اليوم الحالي.`:"خلّصت كل الـ 25 يوم — برافو!";
+  socDetails.forEach((ws,i)=>{
+    let n=0;
+    ws.forEach((_,j)=>{
+      const c=cyberDone.has(wId(i,j));if(c)n++;
+      $(`[data-w="${i}-${j}"]`)?.classList.toggle("completed",c);
+    });
+    const card=$(`[data-soc="${i}"]`);
+    card?.classList.toggle("completed",ws.length>0&&n===ws.length);
+    const sp=$(`[data-sp="${i}"]`);if(sp)sp.textContent=`${n} / ${ws.length} أسابيع`;
+  });
+  const t=cyberTotals(),pc=cyberPercent();
+  $("#cyPct").textContent=pc+"%";
+  $("#cyFill").style.width=pc+"%";
+  $("#cyCount").textContent=`${t.done} من ${t.total} مهمة · ${t.gd}/${googleDays.length} يوم Google · ${t.wd} أسبوع SOC`;
+  applySearch();
+}
+
+function applySearch(){
+  const q=($("#cySearch").value||"").toLowerCase().trim();
+  $$("#gList .gi").forEach(r=>{r.style.display=q&&!r.textContent.toLowerCase().includes(q)?"none":""});
+  $$("#cy-soc .soc").forEach(c=>{c.style.display=q&&!c.textContent.toLowerCase().includes(q)?"none":""});
+}
+
+/* news */
+function timeAgo(d){
+  if(isNaN(d.getTime()))return "حديث";
+  const m=Math.floor((Date.now()-d)/60000);
+  if(m<1)return"الآن";if(m<60)return`منذ ${m} دقيقة`;
+  const h=Math.floor(m/60);if(h<24)return`منذ ${h} ساعة`;
+  return`منذ ${Math.floor(h/24)} يوم`;
+}
+async function loadNews(){
+  const box=$("#newsList");
+  try{
+    const u=encodeURIComponent("https://feeds.feedburner.com/TheHackersNews");
+    const r=await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${u}`);
+    if(!r.ok)throw new Error("net");
+    const j=await r.json();
+    if(!j.items||!j.items.length)throw new Error("empty");
+    box.innerHTML=j.items.slice(0,8).map(a=>`
+      <div class="news-i"><div class="meta"><span style="color:var(--blue)">THE HACKER NEWS</span><span>${timeAgo(new Date(a.pubDate))}</span></div>
+      <h4>${esc(a.title||"")}</h4>
+      <a class="chip" href="${esc(safeUrl(a.link))}" target="_blank" rel="noopener noreferrer">قراءة الخبر <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>`).join("");
+  }catch(e){
+    box.innerHTML=`<div class="loading"><i class="fa-solid fa-triangle-exclamation"></i> تعذر تحديث الأخبار دلوقتي، جرّب بعد شوية.</div>`;
+  }
+}
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+function go(tab){
+  ui.tab=tab;
+  ["today","college","cyber","ai"].forEach(t=>$("#v-"+t).classList.toggle("hidden",t!==tab));
+  document.body.classList.toggle("in-ai",tab==="ai");
+  $$("#tabbar button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab));
+  try{localStorage.setItem(TABKEY,tab)}catch(e){}
+  if(tab==="college")renderCollege();
+  if(tab==="ai"){renderAI();window.scrollTo({top:document.body.scrollHeight});return}
+  window.scrollTo({top:0});
+}
+$("#tabbar").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(b)go(b.dataset.tab)});
+
+function bindSeg(id,cb){
+  $(id).addEventListener("click",e=>{
+    const b=e.target.closest("button");if(!b)return;
+    $$("button",$(id)).forEach(x=>x.classList.toggle("on",x===b));
+    cb(b.dataset.v);
+  });
+}
+bindSeg("#segCol",v=>{ui.col=v;renderCollege()});
+bindSeg("#segCy",v=>{
+  ui.cy=v;
+  ["g","soc","proj","news"].forEach(k=>$("#cy-"+k).style.display=k===v?"":"none");
+  if(v==="news"&&!ui.newsLoaded){ui.newsLoaded=true;loadNews()}
+});
+$("#cySearch").addEventListener("input",applySearch);
+
+/* click delegation */
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]");if(!b)return;
+  const a=b.dataset.act;
+  if(a==="c"){
+    const id=b.dataset.id;
+    if(done[id])delete done[id];else{done[id]=true;markActivity()}
+    lsSet(DKEY,done);renderToday();if(ui.tab==="college")renderCollege();
+  }else if(a==="cy"){toggleRefId(b.dataset.id)}
+  else if(a==="gday"){toggleGoogle(+b.dataset.i)}
+  else if(a==="week"){toggleWeek(+b.dataset.i,+b.dataset.j)}
+  else if(a==="del"){
+    const iso=isoOf(new Date());
+    custom[iso]=(custom[iso]||[]).filter(x=>x.id!==b.dataset.id);
+    delete done[b.dataset.id];
+    lsSet(CKEY,custom);lsSet(DKEY,done);renderToday();
+  }else if(a==="socopen"){b.closest(".soc").classList.toggle("open")}
+});
+
+/* add custom task */
+$("#addForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const inp=$("#addInput"),v=inp.value.trim();if(!v)return;
+  const iso=isoOf(new Date());
+  (custom[iso]=custom[iso]||[]).push({id:`cu-${Date.now()}`,t:v});
+  lsSet(CKEY,custom);inp.value="";renderToday();
+});
+
+/* =====================================================
+   LOCK SCREEN
+===================================================== */
+const lock=$("#lock");
+function tickLock(){
+  const n=new Date();
+  $("#lkTime").innerHTML=`${n.getHours()%12||12}:${pad(n.getMinutes())}<small>${n.getHours()<12?"ص":"م"}</small>`;
+  $("#lkDate").textContent=dateLong(n);
+  $("#lkHello").textContent=hello(n.getHours());
+}
+tickLock();setInterval(tickLock,1000);
+function unlock(){
+  if(lock.classList.contains("up"))return;
+  lock.classList.add("up");
+  try{sessionStorage.setItem("lifeos_in","1")}catch(e){}
+  setTimeout(()=>{lock.style.display="none"},800);
+  setTimeout(startWx,450);
+}
+try{if(sessionStorage.getItem("lifeos_in")==="1")lock.style.display="none"}catch(e){}
+let y0=null;
+lock.addEventListener("pointerdown",e=>{y0=e.clientY});
+lock.addEventListener("pointerup",e=>{if(y0!==null&&y0-e.clientY>50)unlock();y0=null});
+lock.addEventListener("click",unlock);
+lock.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();unlock()}});
+
+/* =====================================================
+   QURAN
+===================================================== */
+const audio=$("#quranAudio"),sheet=$("#sheet"),sheetBg=$("#sheetBg"),mini=$("#mini");
+let activeSurah="";
+function openSheet(){sheet.classList.add("show");sheetBg.classList.add("show");renderSurahs();}
+function closeSheet(){sheet.classList.remove("show");sheetBg.classList.remove("show")}
+$("#quranBtn").addEventListener("click",openSheet);
+sheetBg.addEventListener("click",closeSheet);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+function renderSurahs(){
+  const q=($("#surahSearch").value||"").trim();
+  const res=surahs.filter(s=>s[1].includes(q)||s[0].includes(q));
+  $("#surahList").innerHTML=res.length?res.map(s=>`
+    <div class="surah ${s[0]===activeSurah?"on":""}" data-s="${s[0]}"><span>${esc(s[1])}</span>
+    <span><small>${s[0]}</small><i class="fa-solid ${s[0]===activeSurah&&!audio.paused?"fa-volume-high":"fa-play"}"></i></span></div>`).join("")
+    :`<div class="loading">مش لاقي السورة دي</div>`;
+}
+$("#surahSearch").addEventListener("input",renderSurahs);
+$("#surahList").addEventListener("click",e=>{
+  const r=e.target.closest("[data-s]");if(!r)return;
+  const s=surahs.find(x=>x[0]===r.dataset.s);if(s)playSurah(s);
+});
+function playSurah(s){
+  activeSurah=s[0];
+  audio.src=`https://server8.mp3quran.net/lhdan/${s[0]}.mp3`;
+  audio.play().then(()=>{
+    $("#mTitle").textContent=s[1];
+    mini.classList.add("show");
+    syncPlay();renderSurahs();
+  }).catch(()=>{});
+}
+function syncPlay(){$("#mPlay").innerHTML=audio.paused?'<i class="fa-solid fa-play"></i>':'<i class="fa-solid fa-pause"></i>'}
+function rel(step){
+  const i=surahs.findIndex(x=>x[0]===activeSurah);if(i<0)return;
+  playSurah(surahs[(i+step+surahs.length)%surahs.length]);
+}
+$("#mPrev").addEventListener("click",()=>rel(-1));
+$("#mNext").addEventListener("click",()=>rel(1));
+$("#mPlay").addEventListener("click",()=>{
+  if(!activeSurah)return;
+  if(audio.paused)audio.play().catch(()=>{});else audio.pause();
+});
+audio.addEventListener("play",syncPlay);
+audio.addEventListener("pause",syncPlay);
+audio.addEventListener("ended",()=>rel(1));
+
+/* =====================================================
+   AI  (Gemini)
+===================================================== */
+const AIK="lifeos_gemini_key",AIM="lifeos_gemini_model",AIH="lifeos_ai_hist",AIB="lifeos_ai_brief_";
+const GEM="https://generativelanguage.googleapis.com/v1beta/";
+const rd=(k,f)=>{try{return localStorage.getItem(k)||f}catch(e){return f}};
+let aiKey=rd(AIK,""),aiModel=rd(AIM,"gemini-flash-latest");
+let aiMsgs=lsGet(AIH,[]);
+let aiBusy=false,briefBusy=false;
+
+function aiContext(){
+  const now=new Date(),iso=isoOf(now),dow=now.getDay();
+  const cls=d=>(SCHEDULE[d]||[]).map(c=>`${c.a}-${c.b} ${c.s} (${KIND[c.k].n}, ${c.r})`).join("؛ ")||"مفيش محاضرات";
+  const col=collegeTasks(iso,dow).map(x=>`- [${done[x.id]?"تم":"لسه"}] ${x.s}: ${x.t} (${x.m} دقيقة)`).join("\n");
+  const ref=cyberToday(iso),ci=ref?refInfo(ref):null;
+  const ex=EXAMS.filter(e=>dayDiff(e.d,now)>=0).map(e=>`${e.s}: ${dateLong(new Date(e.d+"T12:00:00"))} الساعة 10:00-11:00 (بعد ${dayDiff(e.d,now)} يوم)`).join("\n")||"مفيش امتحانات جاية";
+  const ct=cyberTotals();
+  return `الوقت دلوقتي: ${dateLong(now)} ${pad(now.getHours())}:${pad(now.getMinutes())}
+محاضرات النهاردة: ${cls(dow)}
+محاضرات بكرة: ${cls((dow+1)%7)}
+مهام الكلية النهاردة:
+${col||"- مفيش"}
+مهمة السايبر النهاردة: ${ci?`[${ci.done?"تم":"لسه"}] ${ci.sub} — ${ci.title}`:"خلّص المسار"}
+تقدم السايبر: ${cyberPercent()}% (${ct.gd}/${googleDays.length} يوم Google)
+امتحانات الميد تيرم الجاية:
+${ex}
+سلسلة الأيام المتتالية: ${streak()}`;
+}
+function aiSystem(){
+  return `انت المساعد الشخصي لمحمد أحمد عبد السلام، طالب في الفرقة الأولى برنامج العلوم الأساسية بكلية العلوم الصحية التطبيقية (جامعة برج العرب التكنولوجية)، وبيتعلم سايبر سيكيورتي بخطة Google Cybersecurity ثم مسار SOC Analyst.
+اتكلم بالعامية المصرية بأسلوب صاحب شاطر: مختصر ومباشر وعملي، من غير مقدمات ولا حشو. استخدم المصطلحات التقنية بالإنجليزي زي ما هي.
+لما تشرح: ابدأ بالفكرة في جملتين، بعدين مثال، وبعدين نقطة تثبيت. ولما يطلب خطة: رتبها بأوقات واقعية حسب جدوله.
+اعتمد على بيانات محمد الحالية دي، ومتخترعش معلومات مش موجودة فيها:
+${aiContext()}`;
+}
+
+const partsText=j=>((j.candidates||[])[0]?.content?.parts||[]).map(p=>p.text||"").join("");
+async function discoverModel(){
+  const r=await fetch(GEM+"models?pageSize=200",{headers:{"x-goog-api-key":aiKey}});
+  if(!r.ok)throw Object.assign(new Error("HTTP "+r.status),{status:r.status});
+  const names=((await r.json()).models||[]).filter(m=>(m.supportedGenerationMethods||[]).includes("generateContent")&&/gemini/.test(m.name)).map(m=>m.name.replace("models/",""));
+  if(!names.length)throw new Error("مفيش موديلات متاحة للمفتاح ده");
+  let pick=names.includes("gemini-flash-latest")?"gemini-flash-latest":null;
+  if(!pick){
+    const fl=names.filter(n=>/flash/.test(n)&&!/lite|image|tts|live|exp|preview|thinking|audio|robotics|computer/.test(n))
+      .sort((a,b)=>parseFloat((b.match(/gemini-(\d+(?:\.\d+)?)/)||[0,0])[1])-parseFloat((a.match(/gemini-(\d+(?:\.\d+)?)/)||[0,0])[1]));
+    pick=fl[0]||names.find(n=>/flash/.test(n))||names[0];
+  }
+  aiModel=pick;try{localStorage.setItem(AIM,aiModel)}catch(_){}
+  const mi=$("#aiModelIn");if(mi)mi.value=aiModel;
+  return pick;
+}
+async function gemCall(contents,opt={}){
+  try{return await gemCallRaw(contents,opt)}
+  catch(e){
+    if(e.status===404&&!opt._retried&&aiKey){await discoverModel();return await gemCallRaw(contents,{...opt,_retried:true})}
+    throw e;
+  }
+}
+async function gemCallRaw(contents,{system,json,onChunk}={}){
+  if(!aiKey)throw Object.assign(new Error("NOKEY"),{code:"NOKEY"});
+  const body={contents,generationConfig:{temperature:json?.4:.7}};
+  if(system)body.systemInstruction={parts:[{text:system}]};
+  if(json)body.generationConfig.responseMimeType="application/json";
+  const stream=!!onChunk;
+  const url=GEM+`models/${encodeURIComponent(aiModel)}:${stream?"streamGenerateContent?alt=sse":"generateContent"}`;
+  const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":aiKey},body:JSON.stringify(body)});
+  if(!r.ok){let m="";try{m=(await r.json()).error.message}catch(e){}throw Object.assign(new Error(m||("HTTP "+r.status)),{status:r.status})}
+  if(!stream){const t=partsText(await r.json());if(!t)throw new Error("EMPTY");return t}
+  const reader=r.body.getReader(),dec=new TextDecoder();let buf="",full="";
+  for(;;){
+    const {done:fin,value}=await reader.read();if(fin)break;
+    buf+=dec.decode(value,{stream:true});
+    let i;
+    while((i=buf.indexOf("\n"))>=0){
+      const line=buf.slice(0,i).trim();buf=buf.slice(i+1);
+      if(line.startsWith("data:")){try{const t=partsText(JSON.parse(line.slice(5)));if(t){full+=t;onChunk(full)}}catch(e){}}
+    }
+  }
+  if(!full)throw new Error("EMPTY");
+  return full;
+}
+const errFull=e=>errMsg(e)+(e.code==="NOKEY"?"":` [${e.status||e.name||""} ${String(e.message||"").slice(0,150)}]`);
+function errMsg(e){
+  if(e.code==="NOKEY")return "ضيف الـ API Key الأول من الإعدادات.";
+  if(e.message==="EMPTY")return "الرد رجع فاضي أو اتحجب، جرّب صيغة تانية.";
+  if(e.status===400&&/key/i.test(e.message))return "المفتاح غلط أو مش شغال. راجعه من الإعدادات.";
+  if(e.status===403)return "المفتاح مرفوض أو متقيّد بنطاق تاني. راجع صلاحياته في Google AI Studio.";
+  if(e.status===404)return "اسم الموديل مش موجود. افتح الإعدادات واختار موديل من القائمة.";
+  if(e.status===429)return "وصلت للحد المجاني دلوقتي، استنى شوية وجرّب تاني.";
+  if(e.name==="TypeError")return "مفيش اتصال بالنت أو المتصفح منع الطلب.";
+  return "حصلت مشكلة: "+e.message;
+}
+
+/* بدون مفتاح: افتح ChatGPT / Claude / Google AI والسؤال جاهز */
+const PROV={chatgpt:{n:"ChatGPT",u:"https://chatgpt.com/?q="},claude:{n:"Claude",u:"https://claude.ai/new?q="},google:{n:"Google AI",u:"https://www.google.com/search?udm=50&q="}};
+let aiProv=rd("lifeos_prov","chatgpt");if(!PROV[aiProv])aiProv="chatgpt";
+function shortCtx(){
+  const now=new Date(),dow=now.getDay();
+  const cls=(SCHEDULE[dow]||[]).map(c=>`${c.a} ${c.s}`).join("، ")||"مفيش محاضرات";
+  const nx=EXAMS.find(e=>dayDiff(e.d,now)>=0);
+  const ci=(()=>{const r=cyberToday(isoOf(now));return r?refInfo(r).title:""})();
+  return `(معلومة عني: طالب سنة أولى علوم أساسية، اليوم ${dateLong(now)}، محاضراتي: ${cls}${nx?`، الامتحان الجاي ${nx.s} يوم ${dateLong(new Date(nx.d+"T12:00:00"))}`:""}${ci?`، بذاكر سايبر سيكيورتي ومهمة النهاردة: ${ci}`:""}. رد بالعامية المصرية باختصار.)`;
+}
+function askExternal(text){
+  const q=encodeURIComponent(text+"\n\n"+shortCtx());
+  const w=window.open(PROV[aiProv].u+q,"_blank");
+  if(w){try{w.opener=null}catch(e){}}
+  else{const el=$("#aiOnMsg");if(el)el.textContent="المتصفح منع فتح التاب. اسمح بالنوافذ المنبثقة للموقع."}
+}
+
+/* markdown صغير وآمن */
+function inl(t){
+  let h=esc(t);
+  h=h.replace(/`([^`\n]+)`/g,"<code>$1</code>").replace(/\*\*([^*\n]+)\*\*/g,"<b>$1</b>").replace(/^#{1,3}\s*(.+)$/gm,"<h5>$1</h5>");
+  h=h.replace(/(?:^|\n)((?:[-*•]\s+.+(?:\n|$))+)/g,(m,b)=>"\n<ul>"+b.trim().split("\n").map(l=>"<li>"+l.replace(/^[-*•]\s+/,"")+"</li>").join("")+"</ul>\n");
+  h=h.replace(/(?:^|\n)((?:\d+[.)]\s+.+(?:\n|$))+)/g,(m,b)=>"\n<ol>"+b.trim().split("\n").map(l=>"<li>"+l.replace(/^\d+[.)]\s+/,"")+"</li>").join("")+"</ol>\n");
+  return h.trim().replace(/<\/(ul|ol|h5)>\n+/g,"</$1>").replace(/\n+<(ul|ol|h5)>/g,"<$1>").replace(/\n/g,"<br>");
+}
+function md(s){return String(s).split("```").map((p,i)=>i%2?`<pre>${esc(p.replace(/^[\w+-]*\n/,"").trim())}</pre>`:inl(p)).join("")}
+
+/* chat */
+const CHIPS=[
+  ["fa-sun","خطة يومي","اعملي خطة تفصيلية لباقي يومي النهاردة بأوقات واقعية حسب محاضراتي ومهامي."],
+  ["fa-shield-halved","اشرحلي السايبر","اشرحلي مهمة السايبر بتاعة النهاردة من الأول، بتبسيط وأمثلة، وبعدها قولي إيه أهم 3 حاجات أركّز عليها."],
+  ["fa-circle-question","اختبرني سايبر","@quiz:cyber"],
+  ["fa-flask","اختبرني كلية","@quiz:college"],
+  ["fa-book-open","ذاكرلي الامتحان الجاي","جهزلي ملخص مذاكرة للامتحان الجاي: أهم العناوين اللي ممكن تيجي في امتحان ميد تيرم لمادة مرحلة أولى، وطريقة مذاكرة في الوقت المتاح."]
+];
+function renderChips(){
+  $("#aiChips").innerHTML=CHIPS.map((c,i)=>`<button class="chip w" type="button" data-chip="${i}"><i class="fa-solid ${c[0]}"></i> ${c[1]}</button>`).join("");
+}
+function quizHTML(m,i){
+  const ans=m.ans||[];const fin=m.qs.every((_,k)=>ans[k]!==undefined&&ans[k]!==null);
+  const score=m.qs.reduce((a,q,k)=>a+(ans[k]===q.a?1:0),0);
+  return `<div class="bub ai qz"><h4><i class="fa-solid fa-circle-question" style="color:var(--blue)"></i> ${esc(m.title)}</h4>`+
+  m.qs.map((q,k)=>{
+    const got=ans[k];const has=got!==undefined&&got!==null;
+    return `<div class="qq"><p>${k+1}. ${esc(q.q)}</p>`+q.o.map((o,j)=>`<button class="qo ${has?(j===q.a?"ok":j===got?"bad":""):""}" type="button" ${has?"disabled":""} data-qz="${i}:${k}:${j}">${esc(o)}</button>`).join("")+
+    (has&&q.e?`<div class="qe">${esc(q.e)}</div>`:"")+`</div>`}).join("")+
+  (fin?`<div class="qscore">نتيجتك ${score} من ${m.qs.length}</div>`:"")+`</div>`;
+}
+function renderAI(){
+  const box=$("#aiMsgs");
+  $("#aiIn").placeholder=aiKey?"اسألني أي حاجة...":"اكتب سؤالك وهيتفتح في "+PROV[aiProv].n;
+  if(!aiMsgs.length){
+    box.innerHTML=`<div class="glass ai-empty"><div class="big"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+      <h3>اسأل أي حاجة</h3>
+      <div class="sub">${aiKey?"المساعد المدمج شغال ✓ اكتب سؤالك تحت.":"اكتب سؤالك تحت وهيتفتح الرد في التطبيق اللي تختاره، وسؤالك معاه ملخص جدولك. من غير إعداد ولا مفاتيح."}</div>
+      ${aiKey?"":`<div class="qlinks">${Object.keys(PROV).map(k=>`<button type="button" class="chip w ${k===aiProv?"sel":""}" data-prov="${k}">${PROV[k].n}</button>`).join("")}</div>
+      <div class="set-msg" id="aiOnMsg"></div>
+      <details class="adv"><summary>عايز الرد يظهر جوه الموقع؟ فعّل Gemini</summary>
+        <ol class="steps"><li>افتح <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">aistudio.google.com/apikey</a> واعمل مفتاح واضغط Copy</li><li>ارجع هنا واضغط الزرار ده</li></ol>
+        <div style="text-align:center"><button class="btn" type="button" data-paste="1"><i class="fa-solid fa-paste"></i> الصق المفتاح من الحافظة</button></div>
+      </details>`}</div>`;
+    return;
+  }
+  $("#aiIn").placeholder=aiKey?"اسألني أي حاجة...":"اكتب سؤالك وهيتفتح في "+PROV[aiProv].n;
+  const last=aiMsgs[aiMsgs.length-1];
+  box.innerHTML=aiMsgs.map((m,i)=>{
+    if(m.role==="quiz")return quizHTML(m,i);
+    if(m.role==="user")return `<div class="bub me">${esc(m.text).replace(/\n/g,"<br>")}</div>`;
+    if(!m.text&&aiBusy&&m===last)return `<div class="bub ai"><span class="dots"><i></i><i></i><i></i></span></div>`;
+    return `<div class="bub ai ${m.err?"err":""}">${md(m.text)}</div>`;
+  }).join("");
+  if(ui.tab==="ai")window.scrollTo({top:document.body.scrollHeight,behavior:"auto"});
+}
+function saveAI(){lsSet(AIH,aiMsgs.slice(-40).filter(m=>!(m.role==="model"&&!m.text)))}
+
+async function sendAI(text){
+  text=(text||"").trim();if(!text||aiBusy)return;
+  if(!aiKey){askExternal(text);return}
+  go("ai");
+  aiMsgs.push({role:"user",text});
+  const m={role:"model",text:""};aiMsgs.push(m);aiBusy=true;renderAI();
+  try{
+    let hist=aiMsgs.slice(0,-1).filter(x=>x.role==="user"||(x.role==="model"&&x.text&&!x.err)).slice(-16).map(x=>({role:x.role,parts:[{text:x.text}]}));
+    while(hist.length&&hist[0].role!=="user")hist.shift();
+    await gemCall(hist,{system:aiSystem(),onChunk:t=>{m.text=t;renderAI()}});
+  }catch(e){m.text=errMsg(e);m.err=true}
+  aiBusy=false;saveAI();renderAI();
+}
+
+async function makeQuiz(kind){
+  if(!aiKey){askExternal(kind==="cyber"?"اختبرني 5 أسئلة اختيار من متعدد في موضوع السايبر سيكيورتي اللي بذاكره النهاردة، واحد واحد، وصحح إجاباتي.":"اختبرني 5 أسئلة اختيار من متعدد في مادة الامتحان الجاي بتاعي، واحد واحد، وصحح إجاباتي.");return}
+  if(aiBusy)return;
+  const now=new Date(),iso=isoOf(now);
+  let topic,title;
+  if(kind==="cyber"){
+    const ref=cyberToday(iso),ci=ref&&refInfo(ref);
+    topic=ci?`${ci.sub} — ${ci.title}`:"أساسيات SOC وأمن المعلومات";title="اختبار سايبر: "+(ci?ci.title:"مراجعة عامة");
+  }else{
+    const nx=EXAMS.find(e=>dayDiff(e.d,now)>=0);
+    topic=nx?`مادة ${nx.s} لطالب مرحلة أولى علوم صحية تطبيقية (ميد تيرم)`:"مواد الفرقة الأولى علوم أساسية";title="اختبار كلية: "+(nx?nx.s:"مراجعة");
+  }
+  go("ai");
+  const m={role:"model",text:""};aiMsgs.push({role:"user",text:"اختبرني: "+title});aiMsgs.push(m);aiBusy=true;renderAI();
+  try{
+    const p=`اعمل اختبار من 5 أسئلة اختيار من متعدد (4 اختيارات لكل سؤال) في الموضوع ده: ${topic}. الأسئلة بالعربي المصري المبسط والمصطلحات التقنية بالإنجليزي، متدرجة من سهل لصعب. رجّع JSON فقط بالشكل: [{"q":"السؤال","o":["أ","ب","ج","د"],"a":رقم_الإجابة_الصحيحة_من_0_لـ3,"e":"شرح قصير للإجابة"}]`;
+    const raw=await gemCall([{role:"user",parts:[{text:p}]}],{json:true});
+    const arr=JSON.parse(raw.replace(/^```(?:json)?|```$/g,"").trim());
+    const qs=(Array.isArray(arr)?arr:[]).filter(q=>q&&q.q&&Array.isArray(q.o)&&q.o.length>=2&&Number.isInteger(q.a)&&q.a>=0&&q.a<q.o.length).slice(0,5);
+    if(!qs.length)throw new Error("EMPTY");
+    aiMsgs.splice(aiMsgs.indexOf(m),1,{role:"quiz",title,qs,ans:[]});
+  }catch(e){m.text=e instanceof SyntaxError?"مقدرتش أطلّع الاختبار بشكل سليم، جرّب تاني.":errMsg(e);m.err=true}
+  aiBusy=false;saveAI();renderAI();
+}
+
+/* brief on Today */
+function renderAIBrief(){
+  const box=$("#tAI");if(!box)return;
+  const iso=isoOf(new Date()),cached=lsGet(AIB+iso,null);
+  const head=`<div class="brief-h"><span class="sp"><i class="fa-solid fa-wand-magic-sparkles"></i></span><b>خطة اليوم من المساعد</b>${cached&&!briefBusy?`<button class="del" type="button" data-brief="1" aria-label="تحديث"><i class="fa-solid fa-rotate"></i></button>`:""}</div>`;
+  let inner;
+  if(briefBusy)inner=`<span class="dots"><i></i><i></i><i></i></span>`;
+  else if(cached)inner=`<div class="bub ai">${md(cached)}</div>`;
+  else inner=`<div class="sub">خلّي المساعد يرتبلك يومك على حسب جدولك.</div><button class="btn soft" style="margin-top:10px" type="button" data-brief="1">اطلعلي خطة النهاردة</button>`;
+  box.innerHTML=`<div class="brief glass">${head}${inner}</div>`;
+}
+async function genBrief(){
+  if(!aiKey){askExternal("اعملي خطة النهاردة في 5 أو 6 نقاط قصيرة بأوقات واقعية بين محاضراتي، فيها مذاكرة كلية وسايبر وراحة.");return}
+  if(briefBusy)return;
+  briefBusy=true;renderAIBrief();
+  try{
+    const t=await gemCall([{role:"user",parts:[{text:"اكتبلي خطة النهاردة في 5 أو 6 نقاط قصيرة جداً بأوقات واقعية بين محاضراتي، وفيها وقت مذاكرة الكلية والسايبر وراحة. آخر سطر: نصيحة واحدة تحفيزية واقعية. من غير مقدمة."}]}],{system:aiSystem()});
+    lsSet(AIB+isoOf(new Date()),t);
+  }catch(e){try{localStorage.removeItem(AIB+isoOf(new Date()))}catch(_){} $("#tAI").innerHTML=`<div class="brief glass"><div class="sub" style="color:var(--red)">${esc(errMsg(e))}</div></div>`;briefBusy=false;return}
+  briefBusy=false;renderAIBrief();
+}
+
+/* settings */
+const aiSet=$("#aiSet");
+function setMsg(t,c){const el=$("#aiSetMsg");el.textContent=t;el.className="set-msg "+(c||"")}
+function openAISet(){
+  $("#aiKeyIn").value=aiKey;$("#aiModelIn").value=aiModel;setMsg("");
+  aiSet.classList.add("show");sheetBg.classList.add("show");
+}
+function closeAISet(){aiSet.classList.remove("show");if(!sheet.classList.contains("show"))sheetBg.classList.remove("show")}
+sheetBg.addEventListener("click",closeAISet);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAISet()});
+$("#aiSetBtn").addEventListener("click",openAISet);
+$("#aiSave").addEventListener("click",async()=>{
+  aiKey=$("#aiKeyIn").value.trim();aiModel=$("#aiModelIn").value.trim()||"gemini-flash-latest";
+  try{localStorage.setItem(AIK,aiKey);localStorage.setItem(AIM,aiModel)}catch(e){}
+  if(!aiKey){setMsg("اتمسح المفتاح.","ok");renderAI();renderAIBrief();return}
+  setMsg("بختبر الاتصال...");
+  try{await gemCall([{role:"user",parts:[{text:"رد بكلمة واحدة: تمام"}]}]);setMsg("الاتصال شغال ✓","ok");renderAI();renderAIBrief()}
+  catch(e){setMsg(errFull(e),"bad")}
+});
+$("#aiList").addEventListener("click",async()=>{
+  if(!($("#aiKeyIn").value.trim()))return setMsg("حط المفتاح الأول.","bad");
+  setMsg("بجيب الموديلات...");
+  try{
+    const r=await fetch(GEM+"models?pageSize=100",{headers:{"x-goog-api-key":$("#aiKeyIn").value.trim()}});
+    if(!r.ok)throw Object.assign(new Error("HTTP "+r.status),{status:r.status});
+    const j=await r.json();
+    const names=(j.models||[]).filter(m=>(m.supportedGenerationMethods||[]).includes("generateContent")&&/gemini/.test(m.name)).map(m=>m.name.replace("models/",""));
+    $("#aiModels").innerHTML=names.map(n=>`<option value="${esc(n)}">`).join("");
+    setMsg(`لقيت ${names.length} موديل — اضغط على خانة الموديل واختار.`,"ok");
+  }catch(e){setMsg(errMsg(e),"bad")}
+});
+$("#aiClear").addEventListener("click",()=>{aiMsgs=[];saveAI();renderAI();setMsg("اتمسحت المحادثة.","ok")});
+
+/* events */
+$("#aiForm").addEventListener("submit",e=>{e.preventDefault();const t=$("#aiIn");const v=t.value;t.value="";t.style.height="auto";sendAI(v)});
+$("#aiIn").addEventListener("input",e=>{const t=e.target;t.style.height="auto";t.style.height=Math.min(t.scrollHeight,120)+"px"});
+$("#aiIn").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing&&window.innerWidth>700){e.preventDefault();$("#aiForm").requestSubmit()}});
+document.addEventListener("click",e=>{
+  const t=e.target;
+  let b=t.closest("[data-chip]");
+  if(b){const c=CHIPS[+b.dataset.chip][2];if(c.startsWith("@quiz:"))makeQuiz(c.slice(6));else sendAI(c);return}
+  if(b=t.closest("[data-prov]")){aiProv=b.dataset.prov;try{localStorage.setItem("lifeos_prov",aiProv)}catch(_){}renderAI();return}
+  if(b=t.closest("[data-ai-ask]")){sendAI(b.dataset.aiAsk);return}
+  if(b=t.closest("[data-aiset]")){openAISet();return}
+  if(b=t.closest("[data-brief]")){try{localStorage.removeItem(AIB+isoOf(new Date()))}catch(_){} genBrief();return}
+  if(b=t.closest("[data-qz]")){
+    const [i,k,j]=b.dataset.qz.split(":").map(Number),m=aiMsgs[i];
+    if(m&&m.role==="quiz"&&(m.ans[k]===undefined||m.ans[k]===null)){m.ans[k]=j;saveAI();renderAI()}
+  }
+});
+renderChips();renderAI();
+
+/* =====================================================
+   THEME + WEATHER + CLOCK
+===================================================== */
+const THK="lifeos_theme";
+let themePref=rd(THK,"auto");
+const mq=window.matchMedia?matchMedia("(prefers-color-scheme: dark)"):null;
+function applyTheme(){
+  const dark=themePref==="dark"||(themePref==="auto"&&mq&&mq.matches);
+  document.documentElement.dataset.mode=dark?"dark":"light";
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?"#000000":"#f4f5fb";
+  $$("#themeSeg button").forEach(b=>b.classList.toggle("on",b.dataset.v===themePref));
+}
+if(mq&&mq.addEventListener)mq.addEventListener("change",applyTheme);
+$("#themeSeg").addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  themePref=b.dataset.v;try{localStorage.setItem(THK,themePref)}catch(_){}
+  applyTheme();
+});
+const setSheet=$("#setSheet");
+function openSet(){applyTheme();paintSalah();paintInstall();setSheet.classList.add("show");sheetBg.classList.add("show")}
+function closeAll(){[setSheet,aiSet,sheet].forEach(x=>x.classList.remove("show"));sheetBg.classList.remove("show")}
+$("#setBtn").addEventListener("click",openSet);
+sheetBg.addEventListener("click",closeAll);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAll()});
+document.addEventListener("click",e=>{
+  if(e.target.closest("[data-aiset]")){setSheet.classList.remove("show");if(!aiSet.classList.contains("show"))sheetBg.classList.remove("show");openAISet()}
+  if(e.target.closest("[data-paste]"))pasteKey();
+});
+applyTheme();
+
+/* paste key in one tap */
+async function pasteKey(){
+  const msg=t=>{const el=$("#aiOnMsg");if(el)el.textContent=t};
+  let k="";
+  try{k=(await navigator.clipboard.readText()).trim()}catch(e){msg("المتصفح منع قراءة الحافظة. افتح ⚙️ من فوق والصق المفتاح هناك.");return}
+  if(k.length<20){msg("الحافظة مفيهاش مفتاح. انسخ المفتاح الأول وجرّب تاني.");return}
+  aiKey=k;try{localStorage.setItem(AIK,aiKey)}catch(_){}
+  msg("بختبر المفتاح...");
+  try{await gemCall([{role:"user",parts:[{text:"رد بكلمة واحدة: تمام"}]}]);renderAI();renderAIBrief()}
+  catch(e){aiKey="";try{localStorage.removeItem(AIK)}catch(_){}msg(errFull(e))}
+}
+
+/* weather: Open-Meteo, العجمي - الإسكندرية */
+const WX={lat:31.10,lon:29.77},WXK="lifeos_wx";
+function wxInfo(c,day){
+  if(c===0)return day?["fa-sun","مشمس","#ff9f0a"]:["fa-moon","صافي","#8e8cf0"];
+  if(c===1||c===2)return day?["fa-cloud-sun","غائم جزئياً","#ff9f0a"]:["fa-cloud-moon","غائم جزئياً","#8e8cf0"];
+  if(c===3)return ["fa-cloud","غائم","#8e9aae"];
+  if(c===45||c===48)return ["fa-smog","ضباب","#8e9aae"];
+  if(c>=51&&c<=57)return ["fa-cloud-rain","رذاذ","#4aa3ff"];
+  if(c>=61&&c<=67||c>=80&&c<=82)return ["fa-cloud-showers-heavy","مطر","#2f8cff"];
+  if(c>=71&&c<=77||c===85||c===86)return ["fa-snowflake","ثلج","#5ac8fa"];
+  if(c>=95)return ["fa-cloud-bolt","عاصفة رعدية","#af52de"];
+  return ["fa-cloud","غائم","#8e9aae"];
+}
+const wxEl=$("#wx");
+function wxWidth(){
+  const t=$(".wxt",wxEl),s=$(wxEl.classList.contains("intro")?".wl":".wc",wxEl);
+  t.style.width=s.scrollWidth+2+"px";
+}
+function applyWx(d){
+  const [ic,tx,col]=wxInfo(d.code,d.day);
+  $("#wxI").innerHTML=`<i class="fa-solid ${ic}"></i>`;$("#wxI").style.color=col;
+  $("#wxC").textContent=`${tx} ${d.temp}°`;
+  wxWidth();
+}
+async function loadWx(){
+  const c=lsGet(WXK,null);
+  if(c&&Date.now()-c.t<20*60*1000){applyWx(c);return}
+  try{
+    const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${WX.lat}&longitude=${WX.lon}&current=temperature_2m,weather_code,is_day&timezone=Africa%2FCairo`);
+    if(!r.ok)throw new Error("wx");
+    const cur=(await r.json()).current;
+    const d={t:Date.now(),temp:Math.round(cur.temperature_2m),code:cur.weather_code,day:cur.is_day===1};
+    lsSet(WXK,d);applyWx(d);
+  }catch(e){if(c)applyWx(c);else{$("#wxC").textContent="الطقس غير متاح";wxWidth()}}
+}
+const h12=d=>{const h=d.getHours();return `${h%12||12}:${pad(d.getMinutes())} ${h<12?"ص":"م"}`};
+function tickClock(){$("#wxClk").textContent=h12(new Date())}
+let wxStarted=false;
+function startWx(){
+  if(wxStarted)return;wxStarted=true;
+  wxEl.classList.remove("pre");wxWidth();
+  setTimeout(()=>{wxEl.classList.remove("intro");wxWidth()},2600);
+}
+tickClock();setInterval(tickClock,10000);loadWx();
+wxWidth();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(wxWidth);
+
+/* =====================================================
+   SALAH REMINDER + PWA + TAP FX
+===================================================== */
+const SK="lifeos_salah";
+let salah=Object.assign({on:false,min:30,quiet:true,last:0},lsGet(SK,{}));
+const SALAH_TXT=[
+  "اللهم صلِّ وسلِّم على نبينا محمد ﷺ",
+  "صلّوا على النبي ﷺ… ريّح قلبك دقيقة",
+  "اللهم صلِّ على محمد وعلى آل محمد",
+  "«من صلّى عليّ صلاة صلّى الله عليه بها عشرًا» ﷺ",
+  "اللهم صلِّ وسلِّم وبارك على سيدنا محمد",
+  "الصلاة على النبي ﷺ نور لقلبك وراحة لبالك",
+  "ﷺ اللهم صلِّ على النبي المصطفى وعلى آله وصحبه وسلم",
+  "كمّل مذاكرتك وصلّي على النبي ﷺ"
+];
+const saveSalah=()=>lsSet(SK,salah);
+const swReg=async()=>{try{return navigator.serviceWorker?await navigator.serviceWorker.getRegistration():null}catch(e){return null}};
+async function notify(title,body){
+  const opts={body,icon:"icons/icon-192.png",badge:"icons/favicon-64.png",tag:"salah",renotify:true,lang:"ar",dir:"rtl",data:{url:"./"}};
+  const reg=await swReg();
+  if(reg&&reg.showNotification)return reg.showNotification(title,opts);
+  if("Notification" in window)new Notification(title,opts);
+}
+const salahPick=()=>SALAH_TXT[Math.floor(Math.random()*SALAH_TXT.length)];
+function salahDue(){
+  if(!salah.on||!("Notification" in window)||Notification.permission!=="granted")return false;
+  if(salah.quiet&&new Date().getHours()<6)return false;
+  return Date.now()-salah.last>=salah.min*60000;
+}
+function tickSalah(){if(!salahDue())return;salah.last=Date.now();saveSalah();notify("صلِّ على النبي ﷺ",salahPick())}
+setInterval(tickSalah,30000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)tickSalah()});
+async function pushCfg(){
+  const reg=await swReg();
+  if(reg&&reg.active)reg.active.postMessage({type:"cfg",on:salah.on,quiet:salah.quiet,min:salah.min});
+  if(reg&&"periodicSync" in reg){
+    try{
+      if(salah.on){const st=await navigator.permissions.query({name:"periodic-background-sync"});if(st.state==="granted")await reg.periodicSync.register("salah",{minInterval:Math.max(salah.min,60)*60000})}
+      else await reg.periodicSync.unregister("salah");
+    }catch(e){}
+  }
+}
+function paintSalah(){
+  $("#salahSw").setAttribute("aria-checked",salah.on);
+  $("#quietSw").setAttribute("aria-checked",salah.quiet);
+  $("#salahInt").value=String(salah.min);
+  const n=$("#salahNote");
+  if(!("Notification" in window))n.textContent="المتصفح ده مبيدعمش الإشعارات.";
+  else if(Notification.permission==="denied")n.textContent="الإشعارات متقفلة للموقع ده. افتح إعدادات المتصفح وسمح بيها وارجع فعّل.";
+  else n.textContent="الإشعارات بتشتغل والتطبيق مفتوح أو متثبّت على جهازك.";
+}
+async function ensurePerm(){
+  if(!("Notification" in window))return false;
+  if(Notification.permission==="default"){try{await Notification.requestPermission()}catch(e){}}
+  return Notification.permission==="granted";
+}
+$("#salahSw").addEventListener("click",async()=>{
+  if(!salah.on){
+    if(!(await ensurePerm())){paintSalah();return}
+    salah.on=true;salah.last=Date.now();saveSalah();notify("تم التفعيل ✓","هتوصلك تذكيرة بالصلاة على النبي ﷺ كل "+salah.min+" دقيقة");
+  }else{salah.on=false;saveSalah()}
+  paintSalah();pushCfg();
+});
+$("#quietSw").addEventListener("click",()=>{salah.quiet=!salah.quiet;saveSalah();paintSalah();pushCfg()});
+$("#salahInt").addEventListener("change",e=>{salah.min=+e.target.value;saveSalah();pushCfg()});
+$("#salahTest").addEventListener("click",async()=>{
+  if(!(await ensurePerm())){paintSalah();return}
+  notify("صلِّ على النبي ﷺ",salahPick());
+});
+
+/* install */
+let deferredInstall=null;
+const isStandalone=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;paintInstall()});
+window.addEventListener("appinstalled",()=>{deferredInstall=null;paintInstall()});
+function paintInstall(){
+  const b=$("#installBtn"),n=$("#installNote"),ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(isStandalone()){b.style.display="none";n.textContent="التطبيق متثبّت ✓";return}
+  b.style.display="";
+  if(deferredInstall){n.textContent="هيتثبّت على جهازك ويفتح زي أي تطبيق.";return}
+  if(ios)n.textContent="على iPhone: من Safari اضغط زرار المشاركة ثم Add to Home Screen.";
+  else n.textContent="لو الزرار مش شغال: افتح الموقع من Chrome أو Edge على رابط https، ومن قايمة المتصفح اختار تثبيت التطبيق.";
+}
+$("#installBtn").addEventListener("click",async()=>{
+  if(deferredInstall){deferredInstall.prompt();try{await deferredInstall.userChoice}catch(e){}deferredInstall=null;paintInstall()}
+  else paintInstall();
+});
+if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){
+  navigator.serviceWorker.register("sw.js").then(()=>navigator.serviceWorker.ready).then(()=>pushCfg()).catch(()=>{});
+}
+paintSalah();paintInstall();
+
+/* college logo */
+const COLLEGE_LOGO="data:image/png;base64,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";
+$$("img.clg").forEach(i=>i.src=COLLEGE_LOGO);
+
+/* tap effects */
+const FX_SEL="button,a,.soc-head,.surah,[data-tab],.quote";
+document.addEventListener("pointerdown",e=>{
+  if(e.button>0||!e.target.closest(FX_SEL))return;
+  const d=document.createElement("span");d.className="tap-fx";d.style.left=e.clientX+"px";d.style.top=e.clientY+"px";
+  document.body.appendChild(d);setTimeout(()=>d.remove(),650);
+  if(navigator.vibrate&&e.pointerType==="touch"){try{navigator.vibrate(8)}catch(_){}}
+},{passive:true});
+document.addEventListener("click",e=>{
+  const c=e.target.closest(".ck[data-id]");if(!c)return;
+  const id=c.dataset.id;
+  requestAnimationFrame(()=>{const n=document.querySelector(`.ck[data-id="${CSS.escape(id)}"]`);if(n&&n.closest(".done,.completed")){n.classList.add("pop")}});
+});
+
+/* quote of the day (tap = next) */
+const yday=()=>Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5);
+let qi=(yday()*7)%quotes.length;
+function paintQuote(){const q=$("#tQuote");if(q)q.textContent=`"${quotes[qi]}"`}
+$("#tQuote").addEventListener("click",()=>{
+  const q=$("#tQuote");q.classList.add("swap");
+  setTimeout(()=>{qi=(qi+1)%quotes.length;paintQuote();q.classList.remove("swap")},220);
+});
+
+/* =====================================================
+   INIT
+===================================================== */
+buildCyber();
+updateCyberUI();
+renderToday();
+renderCollege();
+setInterval(renderToday,60000);
+let startTab="today";
+try{startTab=localStorage.getItem(TABKEY)||"today"}catch(e){}
+{const qt=new URLSearchParams(location.search).get("tab");if(qt)startTab=qt}
+go(["today","college","cyber","ai"].includes(startTab)?startTab:"today");
+if(lock.style.display==="none")startWx();
+</script>
+</body>
+</html>
